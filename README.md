@@ -68,14 +68,14 @@ lib/
 flutter pub get
 ```
 
-2. Run the app:
-```bash
-flutter run
-```
-
-3. Generate
+2. Generate
 ```bash
 dart run build_runner watch -d
+```
+
+3. Run the app:
+```bash
+flutter run
 ```
 
 ## Architecture Overview
