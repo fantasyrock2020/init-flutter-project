@@ -29,21 +29,36 @@ cd .tools && chmod +x generate_model.sh generate_repository.sh generate_structur
 ```
 lib/
 ├── core/
+│   ├── bloc/
 │   ├── constants/
-│   ├── error/
-│   ├── network/
-│   ├── usecases/
-│   └── utils/
+│   ├── data/
+│   │   ├── network/
+│   │   └── share_pref/
+│   ├── di/
+│   ├── enums/
+│   ├── extensions/
+│   ├── routing/
+│   └── services/
+├── data/
+│   ├── datasource/
+│   │   ├── api/
+│   │   └── local/
+│   ├── models/
+│   └── repositories/
+├── domain/
+│   ├── entities/
+│   ├── repositories/
+│   └── usecases/
 ├── features/
 │   ├── auth/
-│   │   ├── data/
-│   │   ├── domain/
-│   │   └── presentation/
+│   │   ├── arguments/
+│   │   ├── bloc/
+│   │   └── widget/
 │   └── home/
-│       ├── data/
-│       ├── domain/
-│       └── presentation/
-└── injection_container.dart
+│       ├── arguments/
+│       ├── bloc/
+│       └── widget/
+└── widget/
 ```
 
 ## Getting Started
