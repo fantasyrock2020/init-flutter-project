@@ -17,14 +17,14 @@ to_pascal_case() {
 PascalName=$(to_pascal_case "$FEATURE_NAME")
 
 # Create file paths
-MODEL_PATH="lib/data/model/${FEATURE_NAME}_model.dart"
-MAPPER_PATH="lib/data/api/mapper/${FEATURE_NAME}_mapper.dart"
-ENTITY_PATH="lib/domain/entity/${FEATURE_NAME}_entity.dart"
+MODEL_PATH="../lib/data/models/${FEATURE_NAME}_model.dart"
+MAPPER_PATH="../lib/data/datasource/api/mapper/${FEATURE_NAME}_mapper.dart"
+ENTITY_PATH="../lib/domain/entities/${FEATURE_NAME}_entity.dart"
 
 # Ensure folders exist
-mkdir -p lib/data/model
-mkdir -p lib/data/api/mapper
-mkdir -p lib/domain/entity
+mkdir -p ../lib/data/models
+mkdir -p ../lib/data/datasource/api/mapper
+mkdir -p ../lib/domain/entities
 
 # Create model file
 cat > "$MODEL_PATH" <<EOL
@@ -68,15 +68,15 @@ EOL
 cat > "$MAPPER_PATH" <<EOL
 import 'package:injectable/injectable.dart';
 
-import '../../../core/data/mapper/base_mapper.dart';
-import '../../../domain/entity/${FEATURE_NAME}_entity.dart';
-import '../../model/${FEATURE_NAME}_model.dart';
+import '../../../../core/data/network/mapper/base_mapper.dart';
+import '../../../../domain/entity/${FEATURE_NAME}_entity.dart';
+import '../../../models/${FEATURE_NAME}_model.dart';
 
 @lazySingleton
 class ${PascalName}Mapper extends BaseDataMapper<${PascalName}Model, ${PascalName}Entity> {
   @override
-  ${PascalName}Entity mapToEntity(${PascalName}Model? model) {
-    return ${PascalName}Entity.fromJson(model?.toJson() ?? <String, dynamic>{});
+  ${PascalName}Entity mapToEntity(${PascalName}Model? data) {
+    return ${PascalName}Entity.fromJson(data?.toJson() ?? <String, dynamic>{});
   }
 
   @override
@@ -87,8 +87,8 @@ class ${PascalName}Mapper extends BaseDataMapper<${PascalName}Model, ${PascalNam
 EOL
 
 # Paths to barrel export files
-MODEL_EXPORT_FILE="lib/data/model/model.dart"
-ENTITY_EXPORT_FILE="lib/domain/entity/entity.dart"
+MODEL_EXPORT_FILE="lib/data/models/models.dart"
+ENTITY_EXPORT_FILE="lib/domain/entities/entities.dart"
 
 # Ensure barrel files exist
 touch "$MODEL_EXPORT_FILE"
@@ -98,17 +98,22 @@ touch "$ENTITY_EXPORT_FILE"
 MODEL_EXPORT_LINE="export '${FEATURE_NAME}_model.dart';"
 ENTITY_EXPORT_LINE="export '${FEATURE_NAME}_entity.dart';"
 
-# Append to model.dart if not present
+# Append to models.dart if not present
 if ! grep -Fxq "$MODEL_EXPORT_LINE" "$MODEL_EXPORT_FILE"; then
   echo -e "$MODEL_EXPORT_LINE" >> "$MODEL_EXPORT_FILE"
-  echo "✅ Exported to model.dart"
+  echo "✅ Exported to models.dart"
 fi
 
-# Append to entity.dart if not present
+# Append to entities.dart if not present
 if ! grep -Fxq "$ENTITY_EXPORT_LINE" "$ENTITY_EXPORT_FILE"; then
   echo -e "$ENTITY_EXPORT_LINE" >> "$ENTITY_EXPORT_FILE"
-  echo "✅ Exported to entity.dart"
+  echo "✅ Exported to entities.dart"
 fi
+
+# Build runner
+echo "🔄 Running build runner"
+cd .. && dart run build_runner build --build-filter "lib/data/models/**" --delete-conflicting-outputs
+cd .. && dart run build_runner build --build-filter "lib/domain/entities/**" --delete-conflicting-outputs
 
 echo "✅ Generated: $MODEL_PATH"
 echo "✅ Generated: $ENTITY_PATH"

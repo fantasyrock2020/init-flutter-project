@@ -16,14 +16,13 @@ to_pascal_case() {
 PascalName=$(to_pascal_case "$FEATURE_NAME")
 
 # Paths
-DOMAIN_REPO_PATH="lib/domain/repository/${FEATURE_NAME}_repository.dart"
-DATA_REPO_PATH="lib/data/repository/${FEATURE_NAME}_repository.dart"
-API_INTERFACE_PATH="lib/data/api/${FEATURE_NAME}/${FEATURE_NAME}_api.dart"
-API_IMPL_PATH="lib/data/api/${FEATURE_NAME}/${FEATURE_NAME}_api_impl.dart"
+DOMAIN_REPO_PATH="../lib/domain/repositories/${FEATURE_NAME}_repository.dart"
+DATA_REPO_PATH="../lib/data/repositories/${FEATURE_NAME}_repository_impl.dart"
+API_PATH="../lib/data/datasource/api/${FEATURE_NAME}/${FEATURE_NAME}_api.dart"
 
-mkdir -p lib/domain/repository
-mkdir -p lib/data/repository
-mkdir -p lib/data/api/${FEATURE_NAME}
+mkdir -p ../lib/domain/repositories
+mkdir -p ../lib/data/repositories
+mkdir -p ../lib/data/datasource/api/${FEATURE_NAME}
 
 # Domain Repository
 cat > "$DOMAIN_REPO_PATH" <<EOL
@@ -257,8 +256,4 @@ class ${PascalName}RepositoryImpl implements ${PascalName}Repository {
 EOL
 
 echo "✅ Created: Repository Implementation"
-echo "• $DOMAIN_REPO_PATH"
-echo "• $DATA_REPO_PATH"
-echo "• $API_INTERFACE_PATH"
-echo "• $API_IMPL_PATH"
 # End of script
