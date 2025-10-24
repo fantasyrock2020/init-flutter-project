@@ -4,9 +4,25 @@ This project follows Clean Architecture principles and SOLID design patterns.
 
 ## Use tools
 
-1. cd .tools && chmod +x flutter_auto_gen_script.sh
-2. ./flutter_auto_gen_script.sh
+chmod
+```bash
+cd .tools && chmod +x generate_model.sh generate_repository.sh generate_structure.sh
+```
 
+- Generate Model 
+```bash
+./generate_model.sh
+```
+
+- Generate Repository 
+```bash
+./generate_repository.sh
+```
+
+- Generate Structure 
+```bash
+./generate_structure.sh
+```
 
 ## Project Structure
 
@@ -40,6 +56,11 @@ flutter pub get
 2. Run the app:
 ```bash
 flutter run
+```
+
+3. Generate
+```bash
+dart run build_runner watch -d
 ```
 
 ## Architecture Overview
