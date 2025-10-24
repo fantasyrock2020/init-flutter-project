@@ -17,14 +17,14 @@ to_pascal_case() {
 PascalName=$(to_pascal_case "$FEATURE_NAME")
 
 # Create file paths
-MODEL_PATH="../lib/data/models/${FEATURE_NAME}_model.dart"
+MODEL_PATH="../lib/data/models/$FEATURE_NAME/${FEATURE_NAME}_model.dart"
 MAPPER_PATH="../lib/data/datasource/api/mapper/${FEATURE_NAME}_mapper.dart"
-ENTITY_PATH="../lib/domain/entities/${FEATURE_NAME}_entity.dart"
+ENTITY_PATH="../lib/domain/entities/$FEATURE_NAME/${FEATURE_NAME}_entity.dart"
 
 # Ensure folders exist
-mkdir -p ../lib/data/models
+mkdir -p ../lib/data/models/$FEATURE_NAME
 mkdir -p ../lib/data/datasource/api/mapper
-mkdir -p ../lib/domain/entities
+mkdir -p ../lib/domain/entities/$FEATURE_NAME
 
 # Create model file
 cat > "$MODEL_PATH" <<EOL
@@ -69,8 +69,8 @@ cat > "$MAPPER_PATH" <<EOL
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/data/network/mapper/base_mapper.dart';
-import '../../../../domain/entity/${FEATURE_NAME}_entity.dart';
-import '../../../models/${FEATURE_NAME}_model.dart';
+import '../../../../domain/entities/$FEATURE_NAME/${FEATURE_NAME}_entity.dart';
+import '../../../models/$FEATURE_NAME/${FEATURE_NAME}_model.dart';
 
 @lazySingleton
 class ${PascalName}Mapper extends BaseDataMapper<${PascalName}Model, ${PascalName}Entity> {
@@ -87,16 +87,16 @@ class ${PascalName}Mapper extends BaseDataMapper<${PascalName}Model, ${PascalNam
 EOL
 
 # Paths to barrel export files
-MODEL_EXPORT_FILE="lib/data/models/models.dart"
-ENTITY_EXPORT_FILE="lib/domain/entities/entities.dart"
+MODEL_EXPORT_FILE="../lib/data/models/models.dart"
+ENTITY_EXPORT_FILE="../lib/domain/entities/entities.dart"
 
 # Ensure barrel files exist
 touch "$MODEL_EXPORT_FILE"
 touch "$ENTITY_EXPORT_FILE"
 
 # Export lines
-MODEL_EXPORT_LINE="export '${FEATURE_NAME}_model.dart';"
-ENTITY_EXPORT_LINE="export '${FEATURE_NAME}_entity.dart';"
+MODEL_EXPORT_LINE="export '$FEATURE_NAME/${FEATURE_NAME}_model.dart';"
+ENTITY_EXPORT_LINE="export '$FEATURE_NAME/${FEATURE_NAME}_entity.dart';"
 
 # Append to models.dart if not present
 if ! grep -Fxq "$MODEL_EXPORT_LINE" "$MODEL_EXPORT_FILE"; then
@@ -111,9 +111,11 @@ if ! grep -Fxq "$ENTITY_EXPORT_LINE" "$ENTITY_EXPORT_FILE"; then
 fi
 
 # Build runner
-echo "🔄 Running build runner"
-cd .. && dart run build_runner build --build-filter "lib/data/models/**" --delete-conflicting-outputs
-cd .. && dart run build_runner build --build-filter "lib/domain/entities/**" --delete-conflicting-outputs
+echo "🔄 Running data model"
+cd .. && dart run build_runner build --build-filter "lib/data/models/$FEATURE_NAME/**" --delete-conflicting-outputs
+
+echo "🔄 Running domain entity"
+dart run build_runner build --build-filter "lib/domain/entities/$FEATURE_NAME/**" --delete-conflicting-outputs
 
 echo "✅ Generated: $MODEL_PATH"
 echo "✅ Generated: $ENTITY_PATH"

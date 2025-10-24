@@ -26,8 +26,8 @@ mkdir -p ../lib/data/datasource/api/${FEATURE_NAME}
 
 # Domain Repository
 cat > "$DOMAIN_REPO_PATH" <<EOL
-import '../../core/data/network/model/base_response.dart';
-import '../domain.dart';
+import '../../core/data/network/base/base_response.dart';
+import '../entities/entities.dart';
 
 abstract class ${PascalName}Repository {
   Future<List<${PascalName}Entity>> getList${PascalName}();
@@ -41,25 +41,8 @@ EOL
 
 echo "✅ Created: Domain Repository"
 
-# API Interface
-cat > "$API_INTERFACE_PATH" <<EOL
-import '../../../core/data/network/model/base_response.dart';
-import '../../../domain/domain.dart';
-
-abstract class ${PascalName}Api {
-  Future<List<${PascalName}Entity>> getList${PascalName}();
-  Future<List<${PascalName}Entity>> getPaging${PascalName}();
-  Future<BaseResponse<${PascalName}Entity>> insert${PascalName}(${PascalName}Entity data);
-  Future<BaseResponse<${PascalName}Entity>> update${PascalName}(${PascalName}Entity data);
-  Future<BaseResponse<${PascalName}Entity>> delete${PascalName}(${PascalName}Entity data);
-  Future<BaseResponse<${PascalName}Entity>> get${PascalName}ByID(int id);
-}
-EOL
-
-echo "✅ Created: API Interface"
-
-# API Implementation
-cat > "$API_IMPL_PATH" <<EOL
+# API
+cat > "$API_PATH" <<EOL
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
@@ -183,15 +166,15 @@ class ${PascalName}ApiImpl implements ${PascalName}Api {
 }
 EOL
 
-echo "✅ Created: API Implementation"
+echo "✅ Created: API"
 
 # Repository Implementation
 cat > "$DATA_REPO_PATH" <<EOL
 import 'package:injectable/injectable.dart';
-import '../../core/data/network/model/base_response.dart';
-import '../../domain/entity/${FEATURE_NAME}_entity.dart';
-import '../../domain/repository/${FEATURE_NAME}_repository.dart';
-import '../api/${FEATURE_NAME}/${FEATURE_NAME}_api.dart';
+import '../../core/data/network/base/base_response.dart';
+import '../../domain/entities/entities.dart';
+import '../../domain/repositories/${FEATURE_NAME}_repository.dart';
+import '../datasource/api/${FEATURE_NAME}/${FEATURE_NAME}_api.dart';
 
 @LazySingleton(as: ${PascalName}Repository)
 class ${PascalName}RepositoryImpl implements ${PascalName}Repository {
