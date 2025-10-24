@@ -91,6 +91,9 @@ echo "📁 Creating file"
 cat > "$PAGE_PATH/${PAGE_NAME}_page.dart" <<EOL
 import 'package:flutter/material.dart';
 
+import '../../../widget/base_state/base_state_full_widget.dart';
+import 'bloc/${PAGE_NAME}_bloc.dart';
+
 class ${PascalName}Page extends StatefulWidget {
   const ${PascalName}Page({super.key});
 
@@ -98,9 +101,9 @@ class ${PascalName}Page extends StatefulWidget {
   State<${PascalName}Page> createState() => _${PascalName}PageState();
 }
 
-class _${PascalName}PageState extends State<${PascalName}Page> {
+class _${PascalName}PageState extends BasePageStateFull<${PascalName}Page, ${PascalName}Bloc> {
   @override
-  Widget build(BuildContext context) {
+  Widget buildPage(BuildContext context) {
     return const Placeholder();
   }
 }
@@ -135,5 +138,10 @@ if ! grep -Fxq "$FEATURE_EXPORT_LINE" "$FEATURE_FILE"; then
   echo "$FEATURE_EXPORT_LINE" >> "$FEATURE_FILE"
   echo "✅ Added export to features.dart"
 fi
+
+# Step 8: Build runner
+BASE_FOLDER_BUILD="lib/features/${FEATURE_NAME}/${PAGE_NAME}/bloc"
+echo "🔄 Running build runner for: ${BASE_FOLDER_BUILD}"
+cd .. && dart run build_runner build --build-filter "${BASE_FOLDER_BUILD}/**" --delete-conflicting-outputs
 
 echo "📁 Generate successfully: $FEATURE_NAME/$PAGE_NAME"
