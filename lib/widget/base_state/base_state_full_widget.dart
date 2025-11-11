@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/bloc/base_bloc.dart';
 import '../../core/bloc/base_status/status_cubit.dart';
 import '../../core/bloc/base_status/status_state.dart';
-import '../../core/di/injector.dart';
 
 abstract class BasePageStateFull<
   T extends StatefulWidget,
@@ -16,17 +15,30 @@ abstract class BasePageStateFullDelegate<
   B extends BaseBloc<dynamic, dynamic>
 >
     extends State<T> {
-  final B bloc = getIt.get<B>();
+  late B bloc;
 
-  StatusCubit get status => bloc.statusCubit;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    bloc = BlocProvider.of<B>(context);
+  }
+
+  @override
+  void didUpdateWidget(covariant T oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: <BlocProvider<StateStreamableSource<dynamic>>>[
-        BlocProvider<B>(create: (_) => bloc, lazy: false),
-        BlocProvider<StatusCubit>.value(value: status),
-      ],
+    final StatusCubit status = bloc.statusCubit;
+
+    return BlocProvider<StatusCubit>.value(
+      value: status,
       child: Stack(
         children: <Widget>[
           buildPage(context),
@@ -66,4 +78,9 @@ abstract class BasePageStateFullDelegate<
 
   @protected
   Widget buildPage(BuildContext context);
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }

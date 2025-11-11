@@ -1,8 +1,9 @@
 part of 'home_bloc.dart';
 
 @freezed
-abstract class HomeState with _$HomeState {
-  const factory HomeState({
+abstract class UserProfileHomeState with _$UserProfileHomeState {
+  const factory UserProfileHomeState({
     @Default(false) bool success,
-  }) = _HomeState;
+    @Default(0) int count,
+  }) = _UserProfileHomeState;
 }

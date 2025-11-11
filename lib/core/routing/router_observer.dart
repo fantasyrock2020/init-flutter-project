@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 
-import '../services/log_service.dart';
+import '../services/logger_service.dart';
 
-class GoRouterObserver extends NavigatorObserver with LogService {
+class GoRouterObserver extends NavigatorObserver with LoggerService {
   String? currentRoute;
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final String routeName = _getRouteName(route);
-    logger.i('[Go Router] didPush: $routeName');
+    logInfo('[Go Router] didPush: $routeName');
   }
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final String routeName = _getRouteName(route);
-    logger.i('[Go Router] didPop: $routeName');
+    logInfo('[Go Router] didPop: $routeName');
   }
 
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final String routeName = _getRouteName(route);
-    logger.i('[Go Router] didRemove: $routeName');
+    logInfo('[Go Router] didRemove: $routeName');
   }
 
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
-    final String newRouteName =
-        newRoute != null ? _getRouteName(newRoute) : 'null';
-    final String oldRouteName =
-        oldRoute != null ? _getRouteName(oldRoute) : 'null';
-    logger.i('[Go Router] didReplace: $oldRouteName -> $newRouteName');
+    final String newRouteName = newRoute != null
+        ? _getRouteName(newRoute)
+        : 'null';
+    final String oldRouteName = oldRoute != null
+        ? _getRouteName(oldRoute)
+        : 'null';
+    logInfo('[Go Router] didReplace: $oldRouteName -> $newRouteName');
   }
 
   String _getRouteName(Route<dynamic> route) {

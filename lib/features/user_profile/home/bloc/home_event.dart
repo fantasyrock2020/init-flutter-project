@@ -1,6 +1,7 @@
 part of 'home_bloc.dart';
 
 @freezed
-abstract class HomeEvent with _$HomeEvent {
-  const factory HomeEvent.started() = _Started;
+abstract class UserProfileHomeEvent with _$UserProfileHomeEvent {
+  const factory UserProfileHomeEvent.started() = _Started;
+  const factory UserProfileHomeEvent.increase() = _Increase;
 }

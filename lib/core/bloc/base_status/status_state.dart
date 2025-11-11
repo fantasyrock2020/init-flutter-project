@@ -5,7 +5,6 @@ part 'status_state.freezed.dart';
 @freezed
 abstract class StatusState with _$StatusState {
   const factory StatusState({
-    @Default(false) bool isInitialize,
     @Default(false) bool useOverlay,
     @Default(false) bool isLoading,
     @Default(false) bool isError,

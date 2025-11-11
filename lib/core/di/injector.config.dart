@@ -21,7 +21,7 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.factory<_i903.HomeBloc>(() => _i903.HomeBloc());
+    gh.singleton<_i903.UserProfileHomeBloc>(() => _i903.UserProfileHomeBloc());
     return this;
   }
 }

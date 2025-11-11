@@ -38,13 +38,13 @@ to_pascal_case() {
   echo "$input" | awk -F'_' '{ for (i=1; i<=NF; i++) { $i=toupper(substr($i,1,1)) tolower(substr($i,2)) } } 1' OFS=''
 }
 
-PascalName=$(to_pascal_case "$PAGE_NAME")
+PascalName="$(to_pascal_case "$FEATURE_NAME")$(to_pascal_case "$PAGE_NAME")"
+
 cat > "$PAGE_PATH/bloc/${PAGE_NAME}_bloc.dart" <<EOL
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
 import '../../../../core/bloc/base_bloc.dart';
 
@@ -52,7 +52,6 @@ part '${PAGE_NAME}_bloc.freezed.dart';
 part '${PAGE_NAME}_event.dart';
 part '${PAGE_NAME}_state.dart';
 
-@injectable
 class ${PascalName}Bloc extends BaseBloc<${PascalName}Event, ${PascalName}State> {
   ${PascalName}Bloc() : super(const ${PascalName}State()) {
     on<_Started>(_onStarted);
@@ -103,8 +102,11 @@ class ${PascalName}Page extends StatefulWidget {
 
 class _${PascalName}PageState extends BasePageStateFull<${PascalName}Page, ${PascalName}Bloc> {
   @override
+  ${PascalName}Bloc get bloc => ${PascalName}Bloc();
+
+  @override
   Widget buildPage(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(body: Text('data'));
   }
 }
 EOL

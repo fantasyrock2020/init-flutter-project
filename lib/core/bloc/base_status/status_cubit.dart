@@ -38,34 +38,22 @@ class StatusCubit extends Cubit<StatusState> {
     ),
   );
 
-  void initialEmitted() =>
-      emit(state.copyWith(isInitialize: true, isSuccess: false));
-
-  /// Execute function safe
   Future<void> callDataService<Result>({
     required Future<Result> Function() action,
-    FutureOr<void> Function()? doOnEventStart,
     FutureOr<void> Function(Result value)? doOnSuccess,
     FutureOr<void> Function(BaseException exception)? doOnError,
     FutureOr<void> Function()? doOnEventCompleted,
-    bool autoHandleStatus = true,
     bool useOverlay = true,
     bool isShowLoading = true,
   }) async {
     try {
-      if (autoHandleStatus && !isClosed && doOnEventStart != null) {
-        initialEmitted();
-      }
-
-      await doOnEventStart?.call();
-
-      if (autoHandleStatus && !isClosed) {
+      if (!isClosed) {
         loadingEmitted(useOverlay: useOverlay, isShowLoading: isShowLoading);
       }
 
       final Result value = await action.call();
 
-      if (autoHandleStatus && !isClosed) {
+      if (!isClosed) {
         successEmitted();
       }
 
@@ -74,7 +62,7 @@ class StatusCubit extends Cubit<StatusState> {
       addError(error, stackTrace);
       final BaseException exception = ErrorException(message: error.toString());
 
-      if (autoHandleStatus && !isClosed) {
+      if (!isClosed) {
         errorEmitted(exception);
       }
 

@@ -12,7 +12,7 @@ part of 'home_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$HomeEvent {
+mixin _$UserProfileHomeEvent {
 
 
 
@@ -20,7 +20,7 @@ mixin _$HomeEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeEvent);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfileHomeEvent);
 }
 
 
@@ -29,20 +29,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'HomeEvent()';
+  return 'UserProfileHomeEvent()';
 }
 
 
 }
 
 /// @nodoc
-class $HomeEventCopyWith<$Res>  {
-$HomeEventCopyWith(HomeEvent _, $Res Function(HomeEvent) __);
+class $UserProfileHomeEventCopyWith<$Res>  {
+$UserProfileHomeEventCopyWith(UserProfileHomeEvent _, $Res Function(UserProfileHomeEvent) __);
 }
 
 
-/// Adds pattern-matching-related methods to [HomeEvent].
-extension HomeEventPatterns on HomeEvent {
+/// Adds pattern-matching-related methods to [UserProfileHomeEvent].
+extension UserProfileHomeEventPatterns on UserProfileHomeEvent {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -55,11 +55,12 @@ extension HomeEventPatterns on HomeEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _Increase value)?  increase,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started(_that);case _:
+return started(_that);case _Increase() when increase != null:
+return increase(_that);case _:
   return orElse();
 
 }
@@ -77,11 +78,12 @@ return started(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _Increase value)  increase,}){
 final _that = this;
 switch (_that) {
 case _Started():
-return started(_that);case _:
+return started(_that);case _Increase():
+return increase(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -98,11 +100,12 @@ return started(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _Increase value)?  increase,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started(_that);case _:
+return started(_that);case _Increase() when increase != null:
+return increase(_that);case _:
   return null;
 
 }
@@ -119,10 +122,11 @@ return started(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function()?  increase,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started();case _:
+return started();case _Increase() when increase != null:
+return increase();case _:
   return orElse();
 
 }
@@ -140,10 +144,11 @@ return started();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function()  increase,}) {final _that = this;
 switch (_that) {
 case _Started():
-return started();case _:
+return started();case _Increase():
+return increase();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -160,10 +165,11 @@ return started();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function()?  increase,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
-return started();case _:
+return started();case _Increase() when increase != null:
+return increase();case _:
   return null;
 
 }
@@ -174,7 +180,7 @@ return started();case _:
 /// @nodoc
 
 
-class _Started implements HomeEvent {
+class _Started implements UserProfileHomeEvent {
   const _Started();
   
 
@@ -194,7 +200,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'HomeEvent.started()';
+  return 'UserProfileHomeEvent.started()';
 }
 
 
@@ -204,40 +210,72 @@ String toString() {
 
 
 /// @nodoc
-mixin _$HomeState {
 
- bool get success;
-/// Create a copy of HomeState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>(this as HomeState, _$identity);
+
+class _Increase implements UserProfileHomeEvent {
+  const _Increase();
+  
+
+
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.success, success) || other.success == success));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Increase);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,success);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'HomeState(success: $success)';
+  return 'UserProfileHomeEvent.increase()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+mixin _$UserProfileHomeState {
+
+ bool get success; int get count;
+/// Create a copy of UserProfileHomeState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UserProfileHomeStateCopyWith<UserProfileHomeState> get copyWith => _$UserProfileHomeStateCopyWithImpl<UserProfileHomeState>(this as UserProfileHomeState, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfileHomeState&&(identical(other.success, success) || other.success == success)&&(identical(other.count, count) || other.count == count));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,success,count);
+
+@override
+String toString() {
+  return 'UserProfileHomeState(success: $success, count: $count)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $HomeStateCopyWith<$Res>  {
-  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
+abstract mixin class $UserProfileHomeStateCopyWith<$Res>  {
+  factory $UserProfileHomeStateCopyWith(UserProfileHomeState value, $Res Function(UserProfileHomeState) _then) = _$UserProfileHomeStateCopyWithImpl;
 @useResult
 $Res call({
- bool success
+ bool success, int count
 });
 
 
@@ -245,27 +283,28 @@ $Res call({
 
 }
 /// @nodoc
-class _$HomeStateCopyWithImpl<$Res>
-    implements $HomeStateCopyWith<$Res> {
-  _$HomeStateCopyWithImpl(this._self, this._then);
+class _$UserProfileHomeStateCopyWithImpl<$Res>
+    implements $UserProfileHomeStateCopyWith<$Res> {
+  _$UserProfileHomeStateCopyWithImpl(this._self, this._then);
 
-  final HomeState _self;
-  final $Res Function(HomeState) _then;
+  final UserProfileHomeState _self;
+  final $Res Function(UserProfileHomeState) _then;
 
-/// Create a copy of HomeState
+/// Create a copy of UserProfileHomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? success = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? success = null,Object? count = null,}) {
   return _then(_self.copyWith(
 success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [HomeState].
-extension HomeStatePatterns on HomeState {
+/// Adds pattern-matching-related methods to [UserProfileHomeState].
+extension UserProfileHomeStatePatterns on UserProfileHomeState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -278,10 +317,10 @@ extension HomeStatePatterns on HomeState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _HomeState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _UserProfileHomeState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _HomeState() when $default != null:
+case _UserProfileHomeState() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -300,10 +339,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _HomeState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _UserProfileHomeState value)  $default,){
 final _that = this;
 switch (_that) {
-case _HomeState():
+case _UserProfileHomeState():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -321,10 +360,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _HomeState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _UserProfileHomeState value)?  $default,){
 final _that = this;
 switch (_that) {
-case _HomeState() when $default != null:
+case _UserProfileHomeState() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -342,10 +381,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool success)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool success,  int count)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _HomeState() when $default != null:
-return $default(_that.success);case _:
+case _UserProfileHomeState() when $default != null:
+return $default(_that.success,_that.count);case _:
   return orElse();
 
 }
@@ -363,10 +402,10 @@ return $default(_that.success);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool success)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool success,  int count)  $default,) {final _that = this;
 switch (_that) {
-case _HomeState():
-return $default(_that.success);case _:
+case _UserProfileHomeState():
+return $default(_that.success,_that.count);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -383,10 +422,10 @@ return $default(_that.success);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool success)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool success,  int count)?  $default,) {final _that = this;
 switch (_that) {
-case _HomeState() when $default != null:
-return $default(_that.success);case _:
+case _UserProfileHomeState() when $default != null:
+return $default(_that.success,_that.count);case _:
   return null;
 
 }
@@ -397,43 +436,44 @@ return $default(_that.success);case _:
 /// @nodoc
 
 
-class _HomeState implements HomeState {
-  const _HomeState({this.success = false});
+class _UserProfileHomeState implements UserProfileHomeState {
+  const _UserProfileHomeState({this.success = false, this.count = 0});
   
 
 @override@JsonKey() final  bool success;
+@override@JsonKey() final  int count;
 
-/// Create a copy of HomeState
+/// Create a copy of UserProfileHomeState
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeState>(this, _$identity);
+_$UserProfileHomeStateCopyWith<_UserProfileHomeState> get copyWith => __$UserProfileHomeStateCopyWithImpl<_UserProfileHomeState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.success, success) || other.success == success));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfileHomeState&&(identical(other.success, success) || other.success == success)&&(identical(other.count, count) || other.count == count));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,success);
+int get hashCode => Object.hash(runtimeType,success,count);
 
 @override
 String toString() {
-  return 'HomeState(success: $success)';
+  return 'UserProfileHomeState(success: $success, count: $count)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
-  factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
+abstract mixin class _$UserProfileHomeStateCopyWith<$Res> implements $UserProfileHomeStateCopyWith<$Res> {
+  factory _$UserProfileHomeStateCopyWith(_UserProfileHomeState value, $Res Function(_UserProfileHomeState) _then) = __$UserProfileHomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool success
+ bool success, int count
 });
 
 
@@ -441,19 +481,20 @@ $Res call({
 
 }
 /// @nodoc
-class __$HomeStateCopyWithImpl<$Res>
-    implements _$HomeStateCopyWith<$Res> {
-  __$HomeStateCopyWithImpl(this._self, this._then);
+class __$UserProfileHomeStateCopyWithImpl<$Res>
+    implements _$UserProfileHomeStateCopyWith<$Res> {
+  __$UserProfileHomeStateCopyWithImpl(this._self, this._then);
 
-  final _HomeState _self;
-  final $Res Function(_HomeState) _then;
+  final _UserProfileHomeState _self;
+  final $Res Function(_UserProfileHomeState) _then;
 
-/// Create a copy of HomeState
+/// Create a copy of UserProfileHomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? success = null,}) {
-  return _then(_HomeState(
+@override @pragma('vm:prefer-inline') $Res call({Object? success = null,Object? count = null,}) {
+  return _then(_UserProfileHomeState(
 success: null == success ? _self.success : success // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

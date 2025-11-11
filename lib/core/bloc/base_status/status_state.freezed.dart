@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StatusState {
 
- bool get isInitialize; bool get useOverlay; bool get isLoading; bool get isError; bool get isSuccess; bool get isShowLoading; String? get errorMessage;
+ bool get useOverlay; bool get isLoading; bool get isError; bool get isSuccess; bool get isShowLoading; String? get errorMessage;
 /// Create a copy of StatusState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $StatusStateCopyWith<StatusState> get copyWith => _$StatusStateCopyWithImpl<Stat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatusState&&(identical(other.isInitialize, isInitialize) || other.isInitialize == isInitialize)&&(identical(other.useOverlay, useOverlay) || other.useOverlay == useOverlay)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.isShowLoading, isShowLoading) || other.isShowLoading == isShowLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatusState&&(identical(other.useOverlay, useOverlay) || other.useOverlay == useOverlay)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.isShowLoading, isShowLoading) || other.isShowLoading == isShowLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isInitialize,useOverlay,isLoading,isError,isSuccess,isShowLoading,errorMessage);
+int get hashCode => Object.hash(runtimeType,useOverlay,isLoading,isError,isSuccess,isShowLoading,errorMessage);
 
 @override
 String toString() {
-  return 'StatusState(isInitialize: $isInitialize, useOverlay: $useOverlay, isLoading: $isLoading, isError: $isError, isSuccess: $isSuccess, isShowLoading: $isShowLoading, errorMessage: $errorMessage)';
+  return 'StatusState(useOverlay: $useOverlay, isLoading: $isLoading, isError: $isError, isSuccess: $isSuccess, isShowLoading: $isShowLoading, errorMessage: $errorMessage)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $StatusStateCopyWith<$Res>  {
   factory $StatusStateCopyWith(StatusState value, $Res Function(StatusState) _then) = _$StatusStateCopyWithImpl;
 @useResult
 $Res call({
- bool isInitialize, bool useOverlay, bool isLoading, bool isError, bool isSuccess, bool isShowLoading, String? errorMessage
+ bool useOverlay, bool isLoading, bool isError, bool isSuccess, bool isShowLoading, String? errorMessage
 });
 
 
@@ -62,10 +62,9 @@ class _$StatusStateCopyWithImpl<$Res>
 
 /// Create a copy of StatusState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isInitialize = null,Object? useOverlay = null,Object? isLoading = null,Object? isError = null,Object? isSuccess = null,Object? isShowLoading = null,Object? errorMessage = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? useOverlay = null,Object? isLoading = null,Object? isError = null,Object? isSuccess = null,Object? isShowLoading = null,Object? errorMessage = freezed,}) {
   return _then(_self.copyWith(
-isInitialize: null == isInitialize ? _self.isInitialize : isInitialize // ignore: cast_nullable_to_non_nullable
-as bool,useOverlay: null == useOverlay ? _self.useOverlay : useOverlay // ignore: cast_nullable_to_non_nullable
+useOverlay: null == useOverlay ? _self.useOverlay : useOverlay // ignore: cast_nullable_to_non_nullable
 as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable
@@ -156,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isInitialize,  bool useOverlay,  bool isLoading,  bool isError,  bool isSuccess,  bool isShowLoading,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool useOverlay,  bool isLoading,  bool isError,  bool isSuccess,  bool isShowLoading,  String? errorMessage)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StatusState() when $default != null:
-return $default(_that.isInitialize,_that.useOverlay,_that.isLoading,_that.isError,_that.isSuccess,_that.isShowLoading,_that.errorMessage);case _:
+return $default(_that.useOverlay,_that.isLoading,_that.isError,_that.isSuccess,_that.isShowLoading,_that.errorMessage);case _:
   return orElse();
 
 }
@@ -177,10 +176,10 @@ return $default(_that.isInitialize,_that.useOverlay,_that.isLoading,_that.isErro
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isInitialize,  bool useOverlay,  bool isLoading,  bool isError,  bool isSuccess,  bool isShowLoading,  String? errorMessage)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool useOverlay,  bool isLoading,  bool isError,  bool isSuccess,  bool isShowLoading,  String? errorMessage)  $default,) {final _that = this;
 switch (_that) {
 case _StatusState():
-return $default(_that.isInitialize,_that.useOverlay,_that.isLoading,_that.isError,_that.isSuccess,_that.isShowLoading,_that.errorMessage);case _:
+return $default(_that.useOverlay,_that.isLoading,_that.isError,_that.isSuccess,_that.isShowLoading,_that.errorMessage);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +196,10 @@ return $default(_that.isInitialize,_that.useOverlay,_that.isLoading,_that.isErro
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isInitialize,  bool useOverlay,  bool isLoading,  bool isError,  bool isSuccess,  bool isShowLoading,  String? errorMessage)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool useOverlay,  bool isLoading,  bool isError,  bool isSuccess,  bool isShowLoading,  String? errorMessage)?  $default,) {final _that = this;
 switch (_that) {
 case _StatusState() when $default != null:
-return $default(_that.isInitialize,_that.useOverlay,_that.isLoading,_that.isError,_that.isSuccess,_that.isShowLoading,_that.errorMessage);case _:
+return $default(_that.useOverlay,_that.isLoading,_that.isError,_that.isSuccess,_that.isShowLoading,_that.errorMessage);case _:
   return null;
 
 }
@@ -212,10 +211,9 @@ return $default(_that.isInitialize,_that.useOverlay,_that.isLoading,_that.isErro
 
 
 class _StatusState implements StatusState {
-  const _StatusState({this.isInitialize = false, this.useOverlay = false, this.isLoading = false, this.isError = false, this.isSuccess = false, this.isShowLoading = true, this.errorMessage});
+  const _StatusState({this.useOverlay = false, this.isLoading = false, this.isError = false, this.isSuccess = false, this.isShowLoading = true, this.errorMessage});
   
 
-@override@JsonKey() final  bool isInitialize;
 @override@JsonKey() final  bool useOverlay;
 @override@JsonKey() final  bool isLoading;
 @override@JsonKey() final  bool isError;
@@ -233,16 +231,16 @@ _$StatusStateCopyWith<_StatusState> get copyWith => __$StatusStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatusState&&(identical(other.isInitialize, isInitialize) || other.isInitialize == isInitialize)&&(identical(other.useOverlay, useOverlay) || other.useOverlay == useOverlay)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.isShowLoading, isShowLoading) || other.isShowLoading == isShowLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatusState&&(identical(other.useOverlay, useOverlay) || other.useOverlay == useOverlay)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isError, isError) || other.isError == isError)&&(identical(other.isSuccess, isSuccess) || other.isSuccess == isSuccess)&&(identical(other.isShowLoading, isShowLoading) || other.isShowLoading == isShowLoading)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isInitialize,useOverlay,isLoading,isError,isSuccess,isShowLoading,errorMessage);
+int get hashCode => Object.hash(runtimeType,useOverlay,isLoading,isError,isSuccess,isShowLoading,errorMessage);
 
 @override
 String toString() {
-  return 'StatusState(isInitialize: $isInitialize, useOverlay: $useOverlay, isLoading: $isLoading, isError: $isError, isSuccess: $isSuccess, isShowLoading: $isShowLoading, errorMessage: $errorMessage)';
+  return 'StatusState(useOverlay: $useOverlay, isLoading: $isLoading, isError: $isError, isSuccess: $isSuccess, isShowLoading: $isShowLoading, errorMessage: $errorMessage)';
 }
 
 
@@ -253,7 +251,7 @@ abstract mixin class _$StatusStateCopyWith<$Res> implements $StatusStateCopyWith
   factory _$StatusStateCopyWith(_StatusState value, $Res Function(_StatusState) _then) = __$StatusStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isInitialize, bool useOverlay, bool isLoading, bool isError, bool isSuccess, bool isShowLoading, String? errorMessage
+ bool useOverlay, bool isLoading, bool isError, bool isSuccess, bool isShowLoading, String? errorMessage
 });
 
 
@@ -270,10 +268,9 @@ class __$StatusStateCopyWithImpl<$Res>
 
 /// Create a copy of StatusState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isInitialize = null,Object? useOverlay = null,Object? isLoading = null,Object? isError = null,Object? isSuccess = null,Object? isShowLoading = null,Object? errorMessage = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? useOverlay = null,Object? isLoading = null,Object? isError = null,Object? isSuccess = null,Object? isShowLoading = null,Object? errorMessage = freezed,}) {
   return _then(_StatusState(
-isInitialize: null == isInitialize ? _self.isInitialize : isInitialize // ignore: cast_nullable_to_non_nullable
-as bool,useOverlay: null == useOverlay ? _self.useOverlay : useOverlay // ignore: cast_nullable_to_non_nullable
+useOverlay: null == useOverlay ? _self.useOverlay : useOverlay // ignore: cast_nullable_to_non_nullable
 as bool,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,isError: null == isError ? _self.isError : isError // ignore: cast_nullable_to_non_nullable
 as bool,isSuccess: null == isSuccess ? _self.isSuccess : isSuccess // ignore: cast_nullable_to_non_nullable

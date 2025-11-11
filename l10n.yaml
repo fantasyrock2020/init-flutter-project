@@ -1,0 +1,5 @@
+arb-dir: lib/core/asset_generator/l10n/locale
+template-arb-file: app_en.arb
+output-dir: lib/core/asset_generator/l10n
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
