@@ -5,8 +5,8 @@ PAGE_NAME=$2
 BASE_LIB="../lib"
 
 if [ -z "$FEATURE_NAME" ] || [ -z "$PAGE_NAME" ]; then
-  echo "❌ Usage: ./generate_feature.sh <feature_name> <page_name>"
-  echo "   Example: ./generate_feature.sh auth sign_up"
+  echo "Usage: ./generate_feature.sh <feature_name> <page_name>"
+  echo "Example: ./generate_feature.sh auth sign_up"
   exit 1
 fi
 
@@ -15,14 +15,14 @@ PAGE_PATH="$FEATURE_PATH/$PAGE_NAME"
 
 # Step 1: Create feature if it doesn't exist
 if [ ! -d "$FEATURE_PATH" ]; then
-  echo "📁 Creating feature: $FEATURE_PATH"
+  echo "Creating feature: $FEATURE_PATH (1/4)"
   mkdir -p "$FEATURE_PATH"
   touch "$FEATURE_PATH/$FEATURE_NAME.dart"
 fi
 
 # Step 2: Abort if feature already exists
 if [ -d "$PAGE_PATH" ]; then
-  echo "⚠️ Page '$PAGE_NAME' already exists in feature '$FEATURE_NAME'. Aborting."
+  echo "Page '$PAGE_NAME' already exists in feature '$FEATURE_NAME'. Aborting."
   exit 1
 fi
 
@@ -31,7 +31,7 @@ mkdir -p "$PAGE_PATH/bloc"
 mkdir -p "$PAGE_PATH/widget"
 
 # Step 4 : Create Bloc
-echo "📁 Creating bloc"
+echo "Creating bloc... (2/4)"
 # Convert snake_case to PascalCase (e.g., sign_in → SignIn)
 to_pascal_case() {
   local input="$1"
@@ -87,7 +87,7 @@ abstract class ${PascalName}State with _\$${PascalName}State {
 EOL
 
 # Step 5: Create widget and UI files
-echo "📁 Creating file"
+echo "Creating file... (3/4)"
 cat > "$PAGE_PATH/${PAGE_NAME}_page.dart" <<EOL
 import 'package:flutter/material.dart';
 
@@ -118,7 +118,7 @@ append_export() {
   local line="export '$PAGE_NAME/$export_path';"
   if ! grep -Fxq "$line" "$FEATURE_ENTRY_FILE"; then
     echo "$line" >> "$FEATURE_ENTRY_FILE"
-    echo "✅ Exported: $line"
+    echo "Exported: $line"
   fi
 }
 
@@ -136,12 +136,12 @@ fi
 # Add export if not already present
 if ! grep -Fxq "$FEATURE_EXPORT_LINE" "$FEATURE_FILE"; then
   echo "$FEATURE_EXPORT_LINE" >> "$FEATURE_FILE"
-  echo "✅ Added export to features.dart"
+  echo "Added export to features.dart"
 fi
 
 # Step 8: Build runner
 BASE_FOLDER_BUILD="lib/features/${FEATURE_NAME}/${PAGE_NAME}/bloc"
-echo "🔄 Running build runner for: ${BASE_FOLDER_BUILD}"
-cd .. && dart run build_runner build --build-filter "${BASE_FOLDER_BUILD}/**" --delete-conflicting-outputs
+echo "Running build runner for: ${BASE_FOLDER_BUILD}... (4/4)"
+cd .. && dart run build_runner build --build-filter "${BASE_FOLDER_BUILD}/**"
 
-echo "📁 Generate successfully: $FEATURE_NAME/$PAGE_NAME"
+echo "Generate successfully: $FEATURE_NAME/$PAGE_NAME"

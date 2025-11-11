@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-  echo "❌ Please provide a feature name. Example: ./generate_repo_api.sh province"
+  echo "Please provide a feature name. Example: ./generate_repo_api.sh province"
   exit 1
 fi
 
@@ -39,7 +39,7 @@ abstract class ${PascalName}Repository {
 }
 EOL
 
-echo "✅ Created: Domain Repository"
+echo "Created: Domain Repository"
 
 # API
 cat > "$API_PATH" <<EOL
@@ -166,7 +166,7 @@ class ${PascalName}ApiImpl implements ${PascalName}Api {
 }
 EOL
 
-echo "✅ Created: API"
+echo "Created: API"
 
 # Repository Implementation
 cat > "$DATA_REPO_PATH" <<EOL
@@ -238,5 +238,5 @@ class ${PascalName}RepositoryImpl implements ${PascalName}Repository {
 }
 EOL
 
-echo "✅ Created: Repository Implementation"
+echo "Created: Repository Implementation"
 # End of script

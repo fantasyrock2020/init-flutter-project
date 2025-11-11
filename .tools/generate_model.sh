@@ -2,7 +2,7 @@
 
 # Input validation
 if [ -z "$1" ]; then
-  echo "❌ Please provide a model. Example: ./generate_model_entity_mapper.sh district"
+  echo "Please provide a model. Example: ./generate_model_entity_mapper.sh district"
   exit 1
 fi
 
@@ -101,23 +101,23 @@ ENTITY_EXPORT_LINE="export '$FEATURE_NAME/${FEATURE_NAME}_entity.dart';"
 # Append to models.dart if not present
 if ! grep -Fxq "$MODEL_EXPORT_LINE" "$MODEL_EXPORT_FILE"; then
   echo -e "$MODEL_EXPORT_LINE" >> "$MODEL_EXPORT_FILE"
-  echo "✅ Exported to models.dart"
+  echo "Exported to models.dart"
 fi
 
 # Append to entities.dart if not present
 if ! grep -Fxq "$ENTITY_EXPORT_LINE" "$ENTITY_EXPORT_FILE"; then
   echo -e "$ENTITY_EXPORT_LINE" >> "$ENTITY_EXPORT_FILE"
-  echo "✅ Exported to entities.dart"
+  echo "Exported to entities.dart"
 fi
 
 # Build runner
-echo "🔄 Running data model"
-cd .. && dart run build_runner build --build-filter "lib/data/models/$FEATURE_NAME/**" --delete-conflicting-outputs
+echo "Running data model"
+cd .. && dart run build_runner build --build-filter "lib/data/models/$FEATURE_NAME/**"
 
-echo "🔄 Running domain entity"
-dart run build_runner build --build-filter "lib/domain/entities/$FEATURE_NAME/**" --delete-conflicting-outputs
+echo "Running domain entity"
+dart run build_runner build --build-filter "lib/domain/entities/$FEATURE_NAME/**"
 
-echo "✅ Generated: $MODEL_PATH"
-echo "✅ Generated: $ENTITY_PATH"
-echo "✅ Generated: $MAPPER_PATH"
-echo "🎉 All files generated successfully!"
+echo "Generated: $MODEL_PATH"
+echo "Generated: $ENTITY_PATH"
+echo "Generated: $MAPPER_PATH"
+echo "All files generated successfully!"
