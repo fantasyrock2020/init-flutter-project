@@ -75,8 +75,11 @@ import '../../../models/$FEATURE_NAME/${FEATURE_NAME}_model.dart';
 @lazySingleton
 class ${PascalName}Mapper extends BaseDataMapper<${PascalName}Model, ${PascalName}Entity> {
   @override
-  ${PascalName}Entity mapToEntity(${PascalName}Model? data) {
-    return ${PascalName}Entity.fromJson(data?.toJson() ?? <String, dynamic>{});
+  ${PascalName}Entity? mapToEntity(${PascalName}Model? data) {
+    if (data == null) {
+      return null;
+    }
+    return ${PascalName}Entity.fromJson(data.toJson());
   }
 
   @override

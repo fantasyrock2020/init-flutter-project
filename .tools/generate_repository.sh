@@ -44,125 +44,35 @@ echo "Created: Domain Repository"
 # API
 cat > "$API_PATH" <<EOL
 import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
+import 'package:retrofit/retrofit.dart';
 
-import '../../../core/data/network/dio/auth_dio_client.dart';
-import '../../../core/data/network/model/base_response.dart';
-import '../../../domain/entity/${FEATURE_NAME}_entity.dart';
-import '../../data.dart';
-import '../mapper/${FEATURE_NAME}_mapper.dart';
-import '${FEATURE_NAME}_api.dart';
+import '../../../../core/data/network/base/base_response.dart';
+import '../../../../domain/entities/entities.dart';
+import '../../../models/${FEATURE_NAME}/${FEATURE_NAME}_model.dart';
 
-@LazySingleton(as: ${PascalName}Api)
-class ${PascalName}ApiImpl implements ${PascalName}Api {
-  ${PascalName}ApiImpl(this._dioClient, this._${FEATURE_NAME}Mapper);
+part 'user_api.g.dart';
 
-  final AuthDioClient _dioClient;
-  final ${PascalName}Mapper _${FEATURE_NAME}Mapper;
+@RestApi(baseUrl: 'https://5d42a6e2bc64f90014a56ca0.mockapi.io/api/v1/')
+abstract class ${PascalName}Api {
+  factory ${PascalName}Api(Dio dio) = _${PascalName}Api;
 
-  @override
-  Future<BaseResponse<${PascalName}Entity>> delete${PascalName}(${PascalName}Entity data) async {
-    try {
-      final Response<dynamic> response = await _dioClient.dio.delete(
-        '/${FEATURE_NAME}/\${data.id}',
-      );
+  @DELETE('/delete')
+  Future<BaseResponse<${PascalName}Model>> delete${PascalName}(@Query('id') int id);
 
-      return BaseResponse<${PascalName}Entity>.fromJson(response.data, (
-        Object? json,
-      ) {
-        final ${PascalName}Model model = ${PascalName}Model.fromJson(
-          json! as Map<String, dynamic>,
-        );
-        return _${FEATURE_NAME}Mapper.mapToEntity(model);
-      });
-    } catch (e) {
-      rethrow;
-    }
-  }
+  @GET('/users')
+  Future<BaseResponse<List<${PascalName}Model>>> getList${PascalName}();
 
-  @override
-  Future<List<${PascalName}Entity>> getList${PascalName}() async {
-    try {
-      final Response<dynamic> response = await _dioClient.dio.get('/${FEATURE_NAME}s');
+  @GET('/users')
+  Future<BaseResponse<List<${PascalName}Model>>> getPaging${PascalName}();
 
-      return <${PascalName}Entity>[];
-    } catch (e) {
-      rethrow;
-    }
-  }
+  @GET('/user')
+  Future<BaseResponse<${PascalName}Model>> get${PascalName}ByID(@Query('id') int id);
 
-  @override
-  Future<List<${PascalName}Entity>> getPaging${PascalName}() async {
-    try {
-      final Response<dynamic> response = await _dioClient.dio.get('/${FEATURE_NAME}s');
+  @POST('/insert')
+  Future<BaseResponse<${PascalName}Model>> insert${PascalName}(@Body() ${PascalName}Entity data);
 
-      return <${PascalName}Entity>[];
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<BaseResponse<${PascalName}Entity>> get${PascalName}ByID(int id) async {
-    try {
-      final Response<dynamic> response = await _dioClient.dio.get(
-        '/${FEATURE_NAME}/\$id',
-      );
-
-      return BaseResponse<${PascalName}Entity>.fromJson(response.data, (
-        Object? json,
-      ) {
-        final ${PascalName}Model model = ${PascalName}Model.fromJson(
-          json! as Map<String, dynamic>,
-        );
-        return _${FEATURE_NAME}Mapper.mapToEntity(model);
-      });
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<BaseResponse<${PascalName}Entity>> insert${PascalName}(${PascalName}Entity data) async {
-    try {
-      final Response<dynamic> response = await _dioClient.dio.post(
-        '/${FEATURE_NAME}',
-        data: data.toJson(),
-      );
-
-      return BaseResponse<${PascalName}Entity>.fromJson(response.data, (
-        Object? json,
-      ) {
-        final ${PascalName}Model model = ${PascalName}Model.fromJson(
-          json! as Map<String, dynamic>,
-        );
-        return _${FEATURE_NAME}Mapper.mapToEntity(model);
-      });
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<BaseResponse<${PascalName}Entity>> update${PascalName}(${PascalName}Entity data) async {
-    try {
-      final Response<dynamic> response = await _dioClient.dio.put(
-        '/${FEATURE_NAME}',
-        data: data.toJson(),
-      );
-
-      return BaseResponse<${PascalName}Entity>.fromJson(response.data, (
-        Object? json,
-      ) {
-        final ${PascalName}Model model = ${PascalName}Model.fromJson(
-          json! as Map<String, dynamic>,
-        );
-        return _${FEATURE_NAME}Mapper.mapToEntity(model);
-      });
-    } catch (e) {
-      rethrow;
-    }
-  }
+  @POST('/update')
+  Future<BaseResponse<${PascalName}Model>> update${PascalName}(@Body() ${PascalName}Entity data);
 }
 EOL
 

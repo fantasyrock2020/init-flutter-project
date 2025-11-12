@@ -6,10 +6,11 @@ class AppColors {
     this.error = const Color(0xfffafafa),
   });
 
-  const AppColors.dark({
-    this.primary = const Color(0x0ff00000),
-    this.error = const Color(0xfffafafa),
-  });
+  const AppColors.dark()
+    : this.light(
+        primary: const Color(0xff000000),
+        error: const Color(0xffededed),
+      );
 
   final Color primary;
   final Color error;

@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/bloc/base_bloc.dart';
 import '../../core/bloc/base_status/status_cubit.dart';
 import '../../core/bloc/base_status/status_state.dart';
+import '../../core/bloc/language/language_cubit.dart';
+import '../../core/bloc/theme/theme_cubit.dart';
+import '../../core/constants/colors.dart';
 
 abstract class BasePageStateFull<
   T extends StatefulWidget,
@@ -16,6 +19,11 @@ abstract class BasePageStateFullDelegate<
 >
     extends State<T> {
   late B bloc;
+  late ThemeCubit themeCubit;
+  late LanguageCubit languageCubit;
+
+  AppColors get appColors => themeCubit.state.colors;
+  Locale get locale => languageCubit.state.locale;
 
   @override
   void initState() {
@@ -26,6 +34,8 @@ abstract class BasePageStateFullDelegate<
   void didChangeDependencies() {
     super.didChangeDependencies();
     bloc = BlocProvider.of<B>(context);
+    themeCubit = BlocProvider.of<ThemeCubit>(context);
+    languageCubit = BlocProvider.of<LanguageCubit>(context);
   }
 
   @override

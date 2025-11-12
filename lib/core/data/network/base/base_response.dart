@@ -9,6 +9,7 @@ abstract class BaseResponse<T> with _$BaseResponse<T> {
     String? status,
     int? totalResults,
     List<T>? articles,
+    T? data,
   }) = _BaseResponse<T>;
 
   const BaseResponse._();
