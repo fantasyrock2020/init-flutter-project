@@ -91,15 +91,18 @@ EOL
 
 # Paths to barrel export files
 MODEL_EXPORT_FILE="../lib/data/models/models.dart"
+MAPPER_EXPORT_FILE="../lib/data/datasource/api/mapper/mapper.dart"
 ENTITY_EXPORT_FILE="../lib/domain/entities/entities.dart"
 
 # Ensure barrel files exist
 touch "$MODEL_EXPORT_FILE"
+touch "$MAPPER_EXPORT_FILE"
 touch "$ENTITY_EXPORT_FILE"
 
 # Export lines
 MODEL_EXPORT_LINE="export '$FEATURE_NAME/${FEATURE_NAME}_model.dart';"
 ENTITY_EXPORT_LINE="export '$FEATURE_NAME/${FEATURE_NAME}_entity.dart';"
+MAPPER_EXPORT_LINE="export '${FEATURE_NAME}_mapper.dart';"
 
 # Append to models.dart if not present
 if ! grep -Fxq "$MODEL_EXPORT_LINE" "$MODEL_EXPORT_FILE"; then
@@ -113,11 +116,17 @@ if ! grep -Fxq "$ENTITY_EXPORT_LINE" "$ENTITY_EXPORT_FILE"; then
   echo "Exported to entities.dart"
 fi
 
+# Append to mapper.dart if not present
+if ! grep -Fxq "$MAPPER_EXPORT_LINE" "$MAPPER_EXPORT_FILE"; then
+  echo -e "$MAPPER_EXPORT_LINE" >> "$MAPPER_EXPORT_FILE"
+  echo "Exported to mapper.dart"
+fi
+
 # Build runner
-echo "Running data model"
+echo "Running data model..."
 cd .. && dart run build_runner build --build-filter "lib/data/models/$FEATURE_NAME/**"
 
-echo "Running domain entity"
+echo "Running domain entity..."
 dart run build_runner build --build-filter "lib/domain/entities/$FEATURE_NAME/**"
 
 echo "Generated: $MODEL_PATH"

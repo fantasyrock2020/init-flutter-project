@@ -14,89 +14,48 @@ class UserRepositoryImpl implements UserRepository {
   final UserMapper _userMapper;
 
   @override
-  Future<BaseResponse<UserEntity>> deleteUser(UserEntity data) async {
-    try {
-      final BaseResponse<UserModel> result = await _userApi.deleteUser(data.id);
-      return BaseResponse<UserEntity>(
-        status: result.status,
-        data: _userMapper.mapToEntity(result.data),
-      );
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<UserEntity?> deleteUser(UserEntity data) => _userApi
+      .deleteUser(data.id)
+      .then((BaseResponse<UserModel> res) => _userMapper.mapToEntity(res.data));
 
   @override
-  Future<BaseResponse<List<UserEntity>>> getListUser() async {
-    try {
-      final BaseResponse<List<UserModel>> result = await _userApi.getListUser();
-      return BaseResponse<List<UserEntity>>(
-        status: result.status,
-        data:
-            result.data
-                ?.map((UserModel user) => _userMapper.mapToEntity(user)!)
-                .toList() ??
-            <UserEntity>[],
-      );
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<List<UserEntity>> getListUser() => _userApi
+      .getListUser()
+      .then((BaseResponse<List<UserModel>> res) => res.data)
+      .then((List<UserModel>? data) {
+        if (data == null) {
+          return <UserEntity>[];
+        }
+        return data
+            .map((UserModel user) => _userMapper.mapToEntity(user)!)
+            .toList();
+      });
 
   @override
-  Future<BaseResponse<List<UserEntity>>> getPagingUser() async {
-    try {
-      final BaseResponse<List<UserModel>> result = await _userApi
-          .getPagingUser();
-      return BaseResponse<List<UserEntity>>(
-        status: result.status,
-        data:
-            result.data
-                ?.map((UserModel user) => _userMapper.mapToEntity(user)!)
-                .toList() ??
-            <UserEntity>[],
-      );
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<List<UserEntity>> getPagingUser() => _userApi
+      .getPagingUser()
+      .then((BaseResponse<List<UserModel>> res) => res.data)
+      .then((List<UserModel>? data) {
+        if (data == null) {
+          return <UserEntity>[];
+        }
+        return data
+            .map((UserModel user) => _userMapper.mapToEntity(user)!)
+            .toList();
+      });
 
   @override
-  Future<BaseResponse<UserEntity>> getUserByID(int id) async {
-    try {
-      final BaseResponse<UserModel> result = await _userApi.getUserByID(id);
-      return BaseResponse<UserEntity>(
-        status: result.status,
-        data: _userMapper.mapToEntity(result.data),
-      );
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<UserEntity?> getUserByID(int id) => _userApi
+      .getUserByID(id)
+      .then((BaseResponse<UserModel> res) => _userMapper.mapToEntity(res.data));
 
   @override
-  Future<BaseResponse<UserEntity>> insertUser(UserEntity data) async {
-    try {
-      final BaseResponse<UserModel> result = await _userApi.insertUser(data);
-      return BaseResponse<UserEntity>(
-        status: result.status,
-        data: _userMapper.mapToEntity(result.data),
-      );
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<UserEntity?> insertUser(UserEntity data) => _userApi
+      .insertUser(data)
+      .then((BaseResponse<UserModel> res) => _userMapper.mapToEntity(res.data));
 
   @override
-  Future<BaseResponse<UserEntity>> updateUser(UserEntity data) async {
-    try {
-      final BaseResponse<UserModel> result = await _userApi.updateUser(data);
-      return BaseResponse<UserEntity>(
-        status: result.status,
-        data: _userMapper.mapToEntity(result.data),
-      );
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<UserEntity?> updateUser(UserEntity data) => _userApi
+      .updateUser(data)
+      .then((BaseResponse<UserModel> res) => _userMapper.mapToEntity(res.data));
 }

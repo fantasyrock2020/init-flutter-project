@@ -26,16 +26,15 @@ mkdir -p ../lib/data/datasource/api/${FEATURE_NAME}
 
 # Domain Repository
 cat > "$DOMAIN_REPO_PATH" <<EOL
-import '../../core/data/network/base/base_response.dart';
 import '../entities/entities.dart';
 
 abstract class ${PascalName}Repository {
   Future<List<${PascalName}Entity>> getList${PascalName}();
   Future<List<${PascalName}Entity>> getPaging${PascalName}();
-  Future<BaseResponse<${PascalName}Entity>> insert${PascalName}(${PascalName}Entity data);
-  Future<BaseResponse<${PascalName}Entity>> update${PascalName}(${PascalName}Entity data);
-  Future<BaseResponse<${PascalName}Entity>> delete${PascalName}(${PascalName}Entity data);
-  Future<BaseResponse<${PascalName}Entity>> get${PascalName}ByID(int id);
+  Future<${PascalName}Entity?> insert${PascalName}(${PascalName}Entity data);
+  Future<${PascalName}Entity?> update${PascalName}(${PascalName}Entity data);
+  Future<${PascalName}Entity?> delete${PascalName}(${PascalName}Entity data);
+  Future<${PascalName}Entity?> get${PascalName}ByID(int id);
 }
 EOL
 
@@ -50,7 +49,7 @@ import '../../../../core/data/network/base/base_response.dart';
 import '../../../../domain/entities/entities.dart';
 import '../../../models/${FEATURE_NAME}/${FEATURE_NAME}_model.dart';
 
-part 'user_api.g.dart';
+part '${FEATURE_NAME}_api.g.dart';
 
 @RestApi(baseUrl: 'https://5d42a6e2bc64f90014a56ca0.mockapi.io/api/v1/')
 abstract class ${PascalName}Api {
@@ -59,13 +58,13 @@ abstract class ${PascalName}Api {
   @DELETE('/delete')
   Future<BaseResponse<${PascalName}Model>> delete${PascalName}(@Query('id') int id);
 
-  @GET('/users')
+  @GET('/${FEATURE_NAME}s')
   Future<BaseResponse<List<${PascalName}Model>>> getList${PascalName}();
 
-  @GET('/users')
+  @GET('/${FEATURE_NAME}s')
   Future<BaseResponse<List<${PascalName}Model>>> getPaging${PascalName}();
 
-  @GET('/user')
+  @GET('/${FEATURE_NAME}')
   Future<BaseResponse<${PascalName}Model>> get${PascalName}ByID(@Query('id') int id);
 
   @POST('/insert')
@@ -84,69 +83,96 @@ import 'package:injectable/injectable.dart';
 import '../../core/data/network/base/base_response.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/repositories/${FEATURE_NAME}_repository.dart';
+import '../datasource/api/mapper/${FEATURE_NAME}_mapper.dart';
 import '../datasource/api/${FEATURE_NAME}/${FEATURE_NAME}_api.dart';
+import '../models/${FEATURE_NAME}/${FEATURE_NAME}_model.dart';
 
 @LazySingleton(as: ${PascalName}Repository)
 class ${PascalName}RepositoryImpl implements ${PascalName}Repository {
-  ${PascalName}RepositoryImpl(this._${FEATURE_NAME}Api);
+  ${PascalName}RepositoryImpl(this._${FEATURE_NAME}Api, this._${FEATURE_NAME}Mapper);
 
   final ${PascalName}Api _${FEATURE_NAME}Api;
+  final ${PascalName}Mapper _${FEATURE_NAME}Mapper;
 
   @override
-  Future<BaseResponse<${PascalName}Entity>> delete${PascalName}(${PascalName}Entity data) async {
-    try {
-      return await _${FEATURE_NAME}Api.delete${PascalName}(data);
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<${PascalName}Entity?> delete${PascalName}(${PascalName}Entity data) => _${FEATURE_NAME}Api
+      .delete${PascalName}(data.id)
+      .then((BaseResponse<${PascalName}Model> res) => _${FEATURE_NAME}Mapper.mapToEntity(res.data));
 
   @override
-  Future<List<${PascalName}Entity>> getList${PascalName}() async {
-    try {
-      return await _${FEATURE_NAME}Api.getList${PascalName}();
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<List<${PascalName}Entity>> getList${PascalName}() => _${FEATURE_NAME}Api
+      .getList${PascalName}()
+      .then((BaseResponse<List<${PascalName}Model>> res) => res.data)
+      .then((List<${PascalName}Model>? data) {
+        if (data == null) {
+          return <${PascalName}Entity>[];
+        }
+        return data
+            .map((${PascalName}Model ${FEATURE_NAME}) => _${FEATURE_NAME}Mapper.mapToEntity(${FEATURE_NAME})!)
+            .toList();
+      });
 
   @override
-  Future<List<${PascalName}Entity>> getPaging${PascalName}() async {
-    try {
-      return await _${FEATURE_NAME}Api.getPaging${PascalName}();
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<List<${PascalName}Entity>> getPaging${PascalName}() => _${FEATURE_NAME}Api
+      .getPaging${PascalName}()
+      .then((BaseResponse<List<${PascalName}Model>> res) => res.data)
+      .then((List<${PascalName}Model>? data) {
+        if (data == null) {
+          return <${PascalName}Entity>[];
+        }
+        return data
+            .map((${PascalName}Model ${FEATURE_NAME}) => _${FEATURE_NAME}Mapper.mapToEntity(${FEATURE_NAME})!)
+            .toList();
+      });
 
   @override
-  Future<BaseResponse<${PascalName}Entity>> get${PascalName}ByID(int id) async {
-    try {
-      return await _${FEATURE_NAME}Api.get${PascalName}ByID(id);
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<${PascalName}Entity?> get${PascalName}ByID(int id) => _${FEATURE_NAME}Api
+      .get${PascalName}ByID(id)
+      .then((BaseResponse<${PascalName}Model> res) => _${FEATURE_NAME}Mapper.mapToEntity(res.data));
 
   @override
-  Future<BaseResponse<${PascalName}Entity>> insert${PascalName}(${PascalName}Entity data) async {
-    try {
-      return await _${FEATURE_NAME}Api.insert${PascalName}(data);
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<${PascalName}Entity?> insert${PascalName}(${PascalName}Entity data) => _${FEATURE_NAME}Api
+      .insert${PascalName}(data)
+      .then((BaseResponse<${PascalName}Model> res) => _${FEATURE_NAME}Mapper.mapToEntity(res.data));
 
   @override
-  Future<BaseResponse<${PascalName}Entity>> update${PascalName}(${PascalName}Entity data) async {
-    try {
-      return await _${FEATURE_NAME}Api.update${PascalName}(data);
-    } catch (e) {
-      rethrow;
-    }
-  }
+  Future<${PascalName}Entity?> update${PascalName}(${PascalName}Entity data) => _${FEATURE_NAME}Api
+      .update${PascalName}(data)
+      .then((BaseResponse<${PascalName}Model> res) => _${FEATURE_NAME}Mapper.mapToEntity(res.data));
 }
 EOL
 
 echo "Created: Repository Implementation"
+
+# Add export line domain/repository
+EXPORT_LINE="export '${FEATURE_NAME}_repository.dart';"
+FEATURE_ENTRY_FILE="../lib/domain/repositories/repositories.dart"
+
+append_export() {
+  local line=$1
+  if ! grep -Fxq "$line" "$FEATURE_ENTRY_FILE"; then
+    echo "$line" >> "$FEATURE_ENTRY_FILE"
+    echo "Exported: $line"
+  fi
+}
+append_export "${EXPORT_LINE}"
+
+# Add export line data/repository
+EXPORT_LINE="export '${FEATURE_NAME}_repository_impl.dart';"
+FEATURE_ENTRY_FILE="../lib/data/repositories/repositories.dart"
+
+append_export() {
+  local line=$1
+  if ! grep -Fxq "$line" "$FEATURE_ENTRY_FILE"; then
+    echo "$line" >> "$FEATURE_ENTRY_FILE"
+    echo "Exported: $line"
+  fi
+}
+append_export "${EXPORT_LINE}"
+
+# Build runner
+BASE_FOLDER_BUILD="lib/data/datasource/api/${FEATURE_NAME}"
+echo "Running build runner for: ${BASE_FOLDER_BUILD}..."
+cd .. && dart run build_runner build --build-filter "${BASE_FOLDER_BUILD}/**"
+
 # End of script
