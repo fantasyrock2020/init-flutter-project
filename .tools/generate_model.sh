@@ -36,8 +36,8 @@ part '${FEATURE_NAME}_model.g.dart';
 @freezed
 abstract class ${PascalName}Model with _\$${PascalName}Model {
   const factory ${PascalName}Model({
-    required int id,
-    required String name,
+    @Default(0) int id,
+    @Default('') String name,
   }) = _${PascalName}Model;
 
   factory ${PascalName}Model.fromJson(Map<String, dynamic> json) =>
@@ -55,8 +55,8 @@ part '${FEATURE_NAME}_entity.g.dart';
 @freezed
 abstract class ${PascalName}Entity with _\$${PascalName}Entity {
   const factory ${PascalName}Entity({
-    required int id,
-    required String name,
+    @Default(0) int id,
+    @Default('') String name,
   }) = _${PascalName}Entity;
 
   factory ${PascalName}Entity.fromJson(Map<String, dynamic> json) =>

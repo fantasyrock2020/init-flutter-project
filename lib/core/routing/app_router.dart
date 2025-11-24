@@ -31,6 +31,13 @@ class AppRouter {
           return const UserProfileHomePage();
         },
       ),
+      GoRoute(
+        path: AppRoutes.todo,
+        name: AppRoutes.todo,
+        builder: (BuildContext context, GoRouterState state) {
+          return const TodoTodoPage();
+        },
+      ),
     ],
   );
 }

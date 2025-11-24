@@ -6,7 +6,7 @@ import 'interceptors/logging_interceptor.dart';
 
 class BaseDioClient {
   BaseDioClient({
-    required String baseUrl,
+    String? baseUrl,
     int? connectTimeout,
     int? receiveTimeout,
     Map<String, dynamic>? headers,
@@ -14,26 +14,25 @@ class BaseDioClient {
   }) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: baseUrl,
+        baseUrl: baseUrl ?? NetworkConst.baseUrl,
         connectTimeout: Duration(
           milliseconds: connectTimeout ?? NetworkConst.connectTimeout,
         ),
         receiveTimeout: Duration(
           milliseconds: receiveTimeout ?? NetworkConst.receiveTimeout,
         ),
-        headers: headers ?? <String, dynamic>{
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+        headers:
+            headers ??
+            <String, dynamic>{
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
       ),
     );
 
     _dio.interceptors.addAll(<Interceptor>[
       AuthInterceptor(),
-      LoggingInterceptor(
-        requestBody: true,
-        requestHeader: true,
-      ),
+      LoggingInterceptor(requestBody: true, requestHeader: true),
     ]);
 
     // Add custom interceptors if provided

@@ -23,7 +23,7 @@ class _HomeHomePageState extends BasePageStateFull<HomeHomePage, HomeHomeBloc> {
         children: <Widget>[
           ElevatedButton(
             onPressed: () {
-              unawaited(context.pushNamed(AppRoutes.user));
+              unawaited(context.pushNamed(AppRoutes.todo));
             },
             child: const Text('Push next'),
           ),

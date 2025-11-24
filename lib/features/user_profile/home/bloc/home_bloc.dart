@@ -10,7 +10,7 @@ part 'home_bloc.freezed.dart';
 part 'home_event.dart';
 part 'home_state.dart';
 
-@singleton
+@injectable
 class UserProfileHomeBloc
     extends BaseBloc<UserProfileHomeEvent, UserProfileHomeState> {
   UserProfileHomeBloc() : super(const UserProfileHomeState()) {
@@ -18,17 +18,17 @@ class UserProfileHomeBloc
     on<_Increase>(_onIncrease);
   }
 
-  FutureOr<void> _onStarted(
+  Future<void> _onStarted(
     _Started event,
     Emitter<UserProfileHomeState> emit,
-  ) {
+  ) async {
     // TODO: Initialize state here
   }
 
-  FutureOr<void> _onIncrease(
+  Future<void> _onIncrease(
     _Increase event,
     Emitter<UserProfileHomeState> emit,
-  ) {
+  ) async {
     emit(state.copyWith(count: state.count + 1));
   }
 }

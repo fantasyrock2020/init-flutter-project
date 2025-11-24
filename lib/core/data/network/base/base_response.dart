@@ -8,14 +8,13 @@ abstract class BaseResponse<T> with _$BaseResponse<T> {
   const factory BaseResponse({
     String? status,
     int? totalResults,
-    List<T>? articles,
-    T? data,
+    @JsonKey(name: 'posts') T? data,
   }) = _BaseResponse<T>;
 
   const BaseResponse._();
 
   factory BaseResponse.fromJson(
-    Map<String, Object?> json,
-    T Function(Object? json) fromJsonT,
+    Map<String, dynamic> json,
+    T Function(dynamic json) fromJsonT,
   ) => _$BaseResponseFromJson<T>(json, fromJsonT);
 }

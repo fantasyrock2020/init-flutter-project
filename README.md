@@ -70,7 +70,7 @@ flutter pub get
 
 2. Generate
 ```bash
-dart run build_runner watch -d
+dart run build_runner build --delete-conflicting-outputs
 ```
 
 3. Run the app:

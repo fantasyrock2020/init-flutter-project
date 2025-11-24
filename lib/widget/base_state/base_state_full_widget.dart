@@ -6,6 +6,7 @@ import '../../core/bloc/base_status/status_state.dart';
 import '../../core/bloc/language/language_cubit.dart';
 import '../../core/bloc/theme/theme_cubit.dart';
 import '../../core/constants/colors.dart';
+import '../../core/di/injector.dart';
 
 abstract class BasePageStateFull<
   T extends StatefulWidget,
@@ -18,9 +19,10 @@ abstract class BasePageStateFullDelegate<
   B extends BaseBloc<dynamic, dynamic>
 >
     extends State<T> {
-  late B bloc;
   late ThemeCubit themeCubit;
   late LanguageCubit languageCubit;
+
+  final B bloc = getIt.get<B>();
 
   AppColors get appColors => themeCubit.state.colors;
   Locale get locale => languageCubit.state.locale;
@@ -33,7 +35,6 @@ abstract class BasePageStateFullDelegate<
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    bloc = BlocProvider.of<B>(context);
     themeCubit = BlocProvider.of<ThemeCubit>(context);
     languageCubit = BlocProvider.of<LanguageCubit>(context);
   }
@@ -47,39 +48,19 @@ abstract class BasePageStateFullDelegate<
   Widget build(BuildContext context) {
     final StatusCubit status = bloc.statusCubit;
 
-    return BlocProvider<StatusCubit>.value(
-      value: status,
+    return MultiBlocProvider(
+      // ignore: always_specify_types
+      providers: [
+        BlocProvider<B>(create: (_) => bloc),
+        BlocProvider<StatusCubit>.value(value: status),
+      ],
       child: Stack(
         children: <Widget>[
           buildPage(context),
           BlocConsumer<StatusCubit, StatusState>(
             bloc: status,
-            listener: (BuildContext context, StatusState state) {
-              if (state.isError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.errorMessage ?? 'An error occurred'),
-                  ),
-                );
-              }
-            },
-            builder: (BuildContext context, StatusState state) {
-              if (state.isLoading && state.isShowLoading) {
-                Widget loadingWidget = const Center(
-                  child: CircularProgressIndicator(),
-                );
-                if (state.useOverlay) {
-                  loadingWidget = Positioned.fill(
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      child: loadingWidget,
-                    ),
-                  );
-                }
-                return loadingWidget;
-              }
-              return const SizedBox.shrink();
-            },
+            listener: buildListener,
+            builder: buildBuilder,
           ),
         ],
       ),
@@ -88,6 +69,30 @@ abstract class BasePageStateFullDelegate<
 
   @protected
   Widget buildPage(BuildContext context);
+
+  void buildListener(BuildContext context, StatusState state) {
+    if (state.isError) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(state.errorMessage ?? 'An error occurred')),
+      );
+    }
+  }
+
+  Widget buildBuilder(BuildContext context, StatusState state) {
+    if (state.isLoading && state.isShowLoading) {
+      Widget loadingWidget = const Center(child: CircularProgressIndicator());
+      if (state.useOverlay) {
+        loadingWidget = Positioned.fill(
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: loadingWidget,
+          ),
+        );
+      }
+      return loadingWidget;
+    }
+    return const SizedBox.shrink();
+  }
 
   @override
   void dispose() {

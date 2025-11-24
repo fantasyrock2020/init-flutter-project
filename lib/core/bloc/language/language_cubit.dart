@@ -7,7 +7,7 @@ class LanguageCubit extends Cubit<LanguageState> {
   LanguageCubit()
     : super(
         const LanguageState(
-          locale: Locale('vi'),
+          locale: Locale('en'),
           supportedLocales: <Locale>[Locale('vi'), Locale('en')],
         ),
       );

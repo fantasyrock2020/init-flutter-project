@@ -1,0 +1,63 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Flutter Clean & Pub Get",
+            "type": "shell",
+            "command": "flutter clean && flutter pub get",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter Build APK",
+            "type": "shell",
+            "command": "flutter build apk --release --obfuscate --split-debug-info=build/app/outputs/symbols --tree-shake-icons",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Flutter Build IPA",
+            "type": "shell",
+            "command": "flutter build ipa --release --export-method=ad-hoc",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Code Generation Watcher",
+            "type": "shell",
+            "command": "flutter pub run build_runner watch",
+            "isBackground": true,
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Build Runner (current file)",
+            "type": "shell",
+            "command": "dart run build_runner build --build-filter \"${file}\" --delete-conflicting-outputs",
+            "problemMatcher": [],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}

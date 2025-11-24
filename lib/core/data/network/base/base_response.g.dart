@@ -12,8 +12,7 @@ _BaseResponse<T> _$BaseResponseFromJson<T>(
 ) => _BaseResponse<T>(
   status: json['status'] as String?,
   totalResults: (json['totalResults'] as num?)?.toInt(),
-  articles: (json['articles'] as List<dynamic>?)?.map(fromJsonT).toList(),
-  data: _$nullableGenericFromJson(json['data'], fromJsonT),
+  data: _$nullableGenericFromJson(json['posts'], fromJsonT),
 );
 
 Map<String, dynamic> _$BaseResponseToJson<T>(
@@ -22,8 +21,7 @@ Map<String, dynamic> _$BaseResponseToJson<T>(
 ) => <String, dynamic>{
   'status': instance.status,
   'totalResults': instance.totalResults,
-  'articles': instance.articles?.map(toJsonT).toList(),
-  'data': _$nullableGenericToJson(instance.data, toJsonT),
+  'posts': _$nullableGenericToJson(instance.data, toJsonT),
 };
 
 T? _$nullableGenericFromJson<T>(

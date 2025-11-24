@@ -8,8 +8,6 @@ import '../core/bloc/theme/theme_cubit.dart';
 import '../core/bloc/theme/theme_state.dart';
 import '../core/extensions/context_extension.dart';
 import '../core/routing/app_router.dart';
-import 'home/home/bloc/home_bloc.dart';
-import 'user_profile/home/bloc/home_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,8 +19,6 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<ThemeCubit>(create: (_) => ThemeCubit()),
         BlocProvider<LanguageCubit>(create: (_) => LanguageCubit()),
-        BlocProvider<HomeHomeBloc>(create: (_) => HomeHomeBloc()),
-        BlocProvider<UserProfileHomeBloc>(create: (_) => UserProfileHomeBloc()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (BuildContext context, ThemeState themeState) {

@@ -43,6 +43,7 @@ echo "Created: Domain Repository"
 # API
 cat > "$API_PATH" <<EOL
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../../core/data/network/base/base_response.dart';
@@ -51,8 +52,10 @@ import '../../../models/${FEATURE_NAME}/${FEATURE_NAME}_model.dart';
 
 part '${FEATURE_NAME}_api.g.dart';
 
+@lazySingleton
 @RestApi(baseUrl: 'https://5d42a6e2bc64f90014a56ca0.mockapi.io/api/v1/')
 abstract class ${PascalName}Api {
+  @factoryMethod
   factory ${PascalName}Api(Dio dio) = _${PascalName}Api;
 
   @DELETE('/delete')

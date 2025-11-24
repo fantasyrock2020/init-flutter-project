@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_api.dart';
+part of 'todo_api.dart';
 
 // dart format off
 
@@ -10,10 +10,8 @@ part of 'user_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter,avoid_unused_constructor_parameters,unreachable_from_main
 
-class _UserApi implements UserApi {
-  _UserApi(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://5d42a6e2bc64f90014a56ca0.mockapi.io/api/v1/';
-  }
+class _TodoApi implements TodoApi {
+  _TodoApi(this._dio, {this.baseUrl, this.errorLogger});
 
   final Dio _dio;
 
@@ -22,27 +20,27 @@ class _UserApi implements UserApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<BaseResponse<UserModel>> deleteUser(int id) async {
+  Future<BaseResponse<TodoModel>> deleteTodo(int id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<UserModel>>(
+    final _options = _setStreamType<BaseResponse<TodoModel>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/delete',
+            '/todos',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<UserModel> _value;
+    late BaseResponse<TodoModel> _value;
     try {
-      _value = BaseResponse<UserModel>.fromJson(
+      _value = BaseResponse<TodoModel>.fromJson(
         _result.data!,
-        (json) => UserModel.fromJson(json as Map<String, dynamic>),
+        (json) => TodoModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, _result);
@@ -52,30 +50,30 @@ class _UserApi implements UserApi {
   }
 
   @override
-  Future<BaseResponse<List<UserModel>>> getListUser() async {
+  Future<BaseResponse<List<TodoModel>>> getListTodo() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<List<UserModel>>>(
+    final _options = _setStreamType<BaseResponse<List<TodoModel>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/users',
+            '/post',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<List<UserModel>> _value;
+    late BaseResponse<List<TodoModel>> _value;
     try {
-      _value = BaseResponse<List<UserModel>>.fromJson(
+      _value = BaseResponse<List<TodoModel>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                  .map<UserModel>(
-                    (i) => UserModel.fromJson(i as Map<String, dynamic>),
+                  .map<TodoModel>(
+                    (i) => TodoModel.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
             : List.empty(),
@@ -88,30 +86,30 @@ class _UserApi implements UserApi {
   }
 
   @override
-  Future<BaseResponse<List<UserModel>>> getPagingUser() async {
+  Future<BaseResponse<List<TodoModel>>> getPagingTodo() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<List<UserModel>>>(
+    final _options = _setStreamType<BaseResponse<List<TodoModel>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/users',
+            '/todos',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<List<UserModel>> _value;
+    late BaseResponse<List<TodoModel>> _value;
     try {
-      _value = BaseResponse<List<UserModel>>.fromJson(
+      _value = BaseResponse<List<TodoModel>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                  .map<UserModel>(
-                    (i) => UserModel.fromJson(i as Map<String, dynamic>),
+                  .map<TodoModel>(
+                    (i) => TodoModel.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
             : List.empty(),
@@ -124,27 +122,27 @@ class _UserApi implements UserApi {
   }
 
   @override
-  Future<BaseResponse<UserModel>> getUserByID(int id) async {
+  Future<BaseResponse<TodoModel>> getTodoByID(int id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<BaseResponse<UserModel>>(
+    final _options = _setStreamType<BaseResponse<TodoModel>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/user',
+            '/todo',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<UserModel> _value;
+    late BaseResponse<TodoModel> _value;
     try {
-      _value = BaseResponse<UserModel>.fromJson(
+      _value = BaseResponse<TodoModel>.fromJson(
         _result.data!,
-        (json) => UserModel.fromJson(json as Map<String, dynamic>),
+        (json) => TodoModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, _result);
@@ -154,12 +152,12 @@ class _UserApi implements UserApi {
   }
 
   @override
-  Future<BaseResponse<UserModel>> insertUser(UserEntity data) async {
+  Future<BaseResponse<TodoModel>> insertTodo(TodoEntity data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<UserModel>>(
+    final _options = _setStreamType<BaseResponse<TodoModel>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -170,11 +168,11 @@ class _UserApi implements UserApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<UserModel> _value;
+    late BaseResponse<TodoModel> _value;
     try {
-      _value = BaseResponse<UserModel>.fromJson(
+      _value = BaseResponse<TodoModel>.fromJson(
         _result.data!,
-        (json) => UserModel.fromJson(json as Map<String, dynamic>),
+        (json) => TodoModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, _result);
@@ -184,12 +182,12 @@ class _UserApi implements UserApi {
   }
 
   @override
-  Future<BaseResponse<UserModel>> updateUser(UserEntity data) async {
+  Future<BaseResponse<TodoModel>> updateTodo(TodoEntity data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = data;
-    final _options = _setStreamType<BaseResponse<UserModel>>(
+    final _options = _setStreamType<BaseResponse<TodoModel>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -200,11 +198,11 @@ class _UserApi implements UserApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late BaseResponse<UserModel> _value;
+    late BaseResponse<TodoModel> _value;
     try {
-      _value = BaseResponse<UserModel>.fromJson(
+      _value = BaseResponse<TodoModel>.fromJson(
         _result.data!,
-        (json) => UserModel.fromJson(json as Map<String, dynamic>),
+        (json) => TodoModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, _result);

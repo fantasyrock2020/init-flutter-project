@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$BaseResponse<T> {
 
- String? get status; int? get totalResults; List<T>? get articles; T? get data;
+ String? get status; int? get totalResults;@JsonKey(name: 'posts') T? get data;
 /// Create a copy of BaseResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $BaseResponseCopyWith<T, BaseResponse<T>> get copyWith => _$BaseResponseCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BaseResponse<T>&&(identical(other.status, status) || other.status == status)&&(identical(other.totalResults, totalResults) || other.totalResults == totalResults)&&const DeepCollectionEquality().equals(other.articles, articles)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BaseResponse<T>&&(identical(other.status, status) || other.status == status)&&(identical(other.totalResults, totalResults) || other.totalResults == totalResults)&&const DeepCollectionEquality().equals(other.data, data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,status,totalResults,const DeepCollectionEquality().hash(articles),const DeepCollectionEquality().hash(data));
+int get hashCode => Object.hash(runtimeType,status,totalResults,const DeepCollectionEquality().hash(data));
 
 @override
 String toString() {
-  return 'BaseResponse<$T>(status: $status, totalResults: $totalResults, articles: $articles, data: $data)';
+  return 'BaseResponse<$T>(status: $status, totalResults: $totalResults, data: $data)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $BaseResponseCopyWith<T,$Res>  {
   factory $BaseResponseCopyWith(BaseResponse<T> value, $Res Function(BaseResponse<T>) _then) = _$BaseResponseCopyWithImpl;
 @useResult
 $Res call({
- String? status, int? totalResults, List<T>? articles, T? data
+ String? status, int? totalResults,@JsonKey(name: 'posts') T? data
 });
 
 
@@ -65,12 +65,11 @@ class _$BaseResponseCopyWithImpl<T,$Res>
 
 /// Create a copy of BaseResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = freezed,Object? totalResults = freezed,Object? articles = freezed,Object? data = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = freezed,Object? totalResults = freezed,Object? data = freezed,}) {
   return _then(_self.copyWith(
 status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String?,totalResults: freezed == totalResults ? _self.totalResults : totalResults // ignore: cast_nullable_to_non_nullable
-as int?,articles: freezed == articles ? _self.articles : articles // ignore: cast_nullable_to_non_nullable
-as List<T>?,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as int?,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as T?,
   ));
 }
@@ -156,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? status,  int? totalResults,  List<T>? articles,  T? data)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? status,  int? totalResults, @JsonKey(name: 'posts')  T? data)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BaseResponse() when $default != null:
-return $default(_that.status,_that.totalResults,_that.articles,_that.data);case _:
+return $default(_that.status,_that.totalResults,_that.data);case _:
   return orElse();
 
 }
@@ -177,10 +176,10 @@ return $default(_that.status,_that.totalResults,_that.articles,_that.data);case 
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? status,  int? totalResults,  List<T>? articles,  T? data)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? status,  int? totalResults, @JsonKey(name: 'posts')  T? data)  $default,) {final _that = this;
 switch (_that) {
 case _BaseResponse():
-return $default(_that.status,_that.totalResults,_that.articles,_that.data);case _:
+return $default(_that.status,_that.totalResults,_that.data);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +196,10 @@ return $default(_that.status,_that.totalResults,_that.articles,_that.data);case 
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? status,  int? totalResults,  List<T>? articles,  T? data)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? status,  int? totalResults, @JsonKey(name: 'posts')  T? data)?  $default,) {final _that = this;
 switch (_that) {
 case _BaseResponse() when $default != null:
-return $default(_that.status,_that.totalResults,_that.articles,_that.data);case _:
+return $default(_that.status,_that.totalResults,_that.data);case _:
   return null;
 
 }
@@ -212,21 +211,12 @@ return $default(_that.status,_that.totalResults,_that.articles,_that.data);case 
 @JsonSerializable(genericArgumentFactories: true)
 
 class _BaseResponse<T> extends BaseResponse<T> {
-  const _BaseResponse({this.status, this.totalResults, final  List<T>? articles, this.data}): _articles = articles,super._();
+  const _BaseResponse({this.status, this.totalResults, @JsonKey(name: 'posts') this.data}): super._();
   factory _BaseResponse.fromJson(Map<String, dynamic> json,T Function(Object?) fromJsonT) => _$BaseResponseFromJson(json,fromJsonT);
 
 @override final  String? status;
 @override final  int? totalResults;
- final  List<T>? _articles;
-@override List<T>? get articles {
-  final value = _articles;
-  if (value == null) return null;
-  if (_articles is EqualUnmodifiableListView) return _articles;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(value);
-}
-
-@override final  T? data;
+@override@JsonKey(name: 'posts') final  T? data;
 
 /// Create a copy of BaseResponse
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +231,16 @@ Map<String, dynamic> toJson(Object? Function(T) toJsonT) {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BaseResponse<T>&&(identical(other.status, status) || other.status == status)&&(identical(other.totalResults, totalResults) || other.totalResults == totalResults)&&const DeepCollectionEquality().equals(other._articles, _articles)&&const DeepCollectionEquality().equals(other.data, data));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BaseResponse<T>&&(identical(other.status, status) || other.status == status)&&(identical(other.totalResults, totalResults) || other.totalResults == totalResults)&&const DeepCollectionEquality().equals(other.data, data));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,status,totalResults,const DeepCollectionEquality().hash(_articles),const DeepCollectionEquality().hash(data));
+int get hashCode => Object.hash(runtimeType,status,totalResults,const DeepCollectionEquality().hash(data));
 
 @override
 String toString() {
-  return 'BaseResponse<$T>(status: $status, totalResults: $totalResults, articles: $articles, data: $data)';
+  return 'BaseResponse<$T>(status: $status, totalResults: $totalResults, data: $data)';
 }
 
 
@@ -261,7 +251,7 @@ abstract mixin class _$BaseResponseCopyWith<T,$Res> implements $BaseResponseCopy
   factory _$BaseResponseCopyWith(_BaseResponse<T> value, $Res Function(_BaseResponse<T>) _then) = __$BaseResponseCopyWithImpl;
 @override @useResult
 $Res call({
- String? status, int? totalResults, List<T>? articles, T? data
+ String? status, int? totalResults,@JsonKey(name: 'posts') T? data
 });
 
 
@@ -278,12 +268,11 @@ class __$BaseResponseCopyWithImpl<T,$Res>
 
 /// Create a copy of BaseResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? totalResults = freezed,Object? articles = freezed,Object? data = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = freezed,Object? totalResults = freezed,Object? data = freezed,}) {
   return _then(_BaseResponse<T>(
 status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String?,totalResults: freezed == totalResults ? _self.totalResults : totalResults // ignore: cast_nullable_to_non_nullable
-as int?,articles: freezed == articles ? _self._articles : articles // ignore: cast_nullable_to_non_nullable
-as List<T>?,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as int?,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as T?,
   ));
 }

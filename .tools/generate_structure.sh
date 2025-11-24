@@ -45,6 +45,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/bloc/base_bloc.dart';
 
@@ -52,12 +53,13 @@ part '${PAGE_NAME}_bloc.freezed.dart';
 part '${PAGE_NAME}_event.dart';
 part '${PAGE_NAME}_state.dart';
 
+@injectable
 class ${PascalName}Bloc extends BaseBloc<${PascalName}Event, ${PascalName}State> {
   ${PascalName}Bloc() : super(const ${PascalName}State()) {
     on<_Started>(_onStarted);
   }
 
-  FutureOr<void> _onStarted(_Started event, Emitter<${PascalName}State> emit) {
+  Future<void> _onStarted(_Started event, Emitter<${PascalName}State> emit) async {
     // TODO: Initialize state here
   }
 }
@@ -102,11 +104,8 @@ class ${PascalName}Page extends StatefulWidget {
 
 class _${PascalName}PageState extends BasePageStateFull<${PascalName}Page, ${PascalName}Bloc> {
   @override
-  ${PascalName}Bloc get bloc => ${PascalName}Bloc();
-
-  @override
   Widget buildPage(BuildContext context) {
-    return const Scaffold(body: Text('data'));
+    return Scaffold(appBar: AppBar(), body: const Text('data'));
   }
 }
 EOL

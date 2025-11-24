@@ -40,9 +40,9 @@ class StatusCubit extends Cubit<StatusState> {
 
   Future<void> callDataService<Result>({
     required Future<Result> Function() action,
-    FutureOr<void> Function(Result value)? doOnSuccess,
-    FutureOr<void> Function(BaseException exception)? doOnError,
-    FutureOr<void> Function()? doOnEventCompleted,
+    void Function(Result value)? doOnSuccess,
+    void Function(BaseException exception)? doOnError,
+    void Function()? doOnEventCompleted,
     bool useOverlay = true,
     bool isShowLoading = true,
   }) async {
@@ -57,7 +57,7 @@ class StatusCubit extends Cubit<StatusState> {
         successEmitted();
       }
 
-      await doOnSuccess?.call(value);
+      doOnSuccess?.call(value);
     } on Object catch (error, stackTrace) {
       addError(error, stackTrace);
       final BaseException exception = ErrorException(message: error.toString());
@@ -66,9 +66,9 @@ class StatusCubit extends Cubit<StatusState> {
         errorEmitted(exception);
       }
 
-      await doOnError?.call(exception);
+      doOnError?.call(exception);
     } finally {
-      await doOnEventCompleted?.call();
+      doOnEventCompleted?.call();
     }
   }
 }

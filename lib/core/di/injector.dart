@@ -10,7 +10,4 @@ Future<void> configureInjection({
   String? environment,
   EnvironmentFilter? environmentFilter,
 }) async =>
-    getIt.init(
-      environment: environment,
-      environmentFilter: environmentFilter,
-    );
+    getIt.init(environment: environment, environmentFilter: environmentFilter);

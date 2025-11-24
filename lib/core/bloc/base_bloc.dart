@@ -21,9 +21,9 @@ abstract class BaseBlocDelegate<E, S> extends Bloc<E, S> {
 
   Future<void> callDataService<T>({
     required Future<T> Function() action,
-    FutureOr<void> Function(T value)? doOnSuccess,
-    FutureOr<void> Function(BaseException error)? doOnError,
-    FutureOr<void> Function()? doOnEventCompleted,
+    void Function(T value)? doOnSuccess,
+    void Function(BaseException error)? doOnError,
+    void Function()? doOnEventCompleted,
     bool useOverlay = true,
     bool isShowLoading = true,
   }) => statusCubit.callDataService<T>(
