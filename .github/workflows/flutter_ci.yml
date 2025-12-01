@@ -134,7 +134,7 @@ jobs:
 
       - name: 📦 Package IPA
         run: |
-          APP_PATH=build/ios/iphoneos/Runner.app
+          APP_PATH=build/ios/Release-iphoneos/Runner.app
           IPA_DIR=build/ipa_output
           mkdir -p "$IPA_DIR/Payload"
           cp -R "$APP_PATH" "$IPA_DIR/Payload/"
