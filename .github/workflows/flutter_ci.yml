@@ -61,7 +61,9 @@ jobs:
           bundler-cache: true
 
       - name: Bundle install
-        run: bundle install
+        run: |
+          cd android
+          bundle install
 
       - name: Build APK
         run: bundle exec fastlane android build_apk
@@ -101,7 +103,9 @@ jobs:
           bundler-cache: true
 
       - name: Bundle install
-        run: bundle install
+        run: |
+          cd ios
+          bundle install
 
       - name: Build APK
         run: bundle exec fastlane android build_apk
