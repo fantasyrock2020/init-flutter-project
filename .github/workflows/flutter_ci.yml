@@ -50,6 +50,12 @@ jobs:
       - name: Analyze code
         run: flutter analyze
 
+      - name: Bundle install
+        run: bundle install
+
+      - name: Build APK
+        run: bundle exec fastlane android build_apk
+
   build-ios:
     name: Build iOS
     runs-on: macos-latest
