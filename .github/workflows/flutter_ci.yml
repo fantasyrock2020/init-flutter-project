@@ -24,12 +24,27 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: 🚀 Cache pub deps
+      - name: ⚡ Cache pub deps
         uses: actions/cache@v3
         with:
           path: ~/.pub-cache
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
           restore-keys: ${{ runner.os }}-pub-
+
+      - name: ⚡ Restore Gradle Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: ⚡ Cache Android SDK
+        uses: actions/cache@v3
+        with:
+          path: /usr/local/lib/android
+          key: ${{ runner.os }}-android-sdk
 
       - name: ☕️ Setup Java
         uses: actions/setup-java@v3
@@ -67,13 +82,18 @@ jobs:
           cd android  
           bundle exec fastlane build_apk
 
+      - name: Prepare artifacts
+        run: |
+          mkdir -p artifacts
+          cp build/app/outputs/flutter-apk/*.apk artifacts/
+
   build-ios:
     name: Build iOS
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: 🚀 Cache pub deps
+      - name: ⚡ Cache pub deps
         uses: actions/cache@v3
         with:
           path: ~/.pub-cache
