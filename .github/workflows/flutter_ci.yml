@@ -82,7 +82,7 @@ jobs:
           cd android  
           bundle exec fastlane build_apk
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: 🗂️ Android-APK File
           path: build/app/outputs/flutter-apk/*.apk
@@ -141,7 +141,7 @@ jobs:
           rm -rf "$IPA_DIR/Payload"
           echo "Unsigned IPA created at $IPA_DIR/Runner.ipa"
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: 🗂️ iOS-IPA File
           path: build/ipa_output/Runner.ipa
