@@ -12,6 +12,10 @@ permissions:
   contents: read
   packages: write
 
+env:
+  RUBY_VERSION: 3.4
+  JAVA_VERSION: 17
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -30,11 +34,11 @@ jobs:
           key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.yaml') }}
           restore-keys: ${{ runner.os }}-pub-
 
-      - name: ☕️ Setup Java (Temurin 17)
+      - name: ☕️ Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: 🦋 Setup Flutter
         uses: subosito/flutter-action@v2
@@ -49,6 +53,12 @@ jobs:
 
       - name: Analyze code
         run: flutter analyze
+      
+      - name: Setup Ruby & Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
 
       - name: Bundle install
         run: bundle install
@@ -73,12 +83,25 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true
 
       - name: Install dependencies
-        run: flutter pub get`
+        run: flutter pub get
 
       - name: Run tests
         run: flutter test
 
       - name: Analyze code
         run: flutter analyze
+
+      - name: Setup Ruby & Bundler
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+
+      - name: Bundle install
+        run: bundle install
+
+      - name: Build APK
+        run: bundle exec fastlane android build_apk
