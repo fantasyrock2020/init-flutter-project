@@ -56,6 +56,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true
 
       - name: 📦 Install dependencies
         run: flutter pub get
@@ -126,10 +127,10 @@ jobs:
           cd ios
           bundle install
 
-      - name: 🚀 Build IPA
+      - name: 🚀 Build IOS
         run: |
           cd ios
-          bundle exec fastlane build_ipa
+          bundle exec fastlane build_ios
 
       - name: 📦 Package IPA
         run: |

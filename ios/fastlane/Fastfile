@@ -20,4 +20,9 @@ platform :ios do
   lane :build_ipa do
     sh("flutter build ipa --release --no-codesign")
   end
+
+  desc "Build IOS"
+  lane :build_ios do
+    sh("flutter build ios --release --no-codesign")
+  end
 end
