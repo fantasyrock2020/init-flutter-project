@@ -18,7 +18,7 @@ default_platform(:android)
 platform :android do
   desc "Build APK"
   lane :build_apk do
-    sh("flutter build apk --release")
+    sh("flutter build apk --release --no-tree-shake-icons")
   end
 
   desc "Build AAB"
