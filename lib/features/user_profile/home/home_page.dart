@@ -23,7 +23,10 @@ class _UserProfileHomePageState
             return state.count;
           },
           builder: (BuildContext context, int state) {
-            return Text('data $state', style: TextStyle(color: Colors.black));
+            return Text(
+              'data $state',
+              style: const TextStyle(color: Colors.black),
+            );
           },
         ),
       ),

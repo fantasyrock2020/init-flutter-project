@@ -16,7 +16,5 @@ class HomeHomeBloc extends BaseBloc<HomeHomeEvent, HomeHomeState> {
     on<_Started>(_onStarted);
   }
 
-  Future<void> _onStarted(_Started event, Emitter<HomeHomeState> emit) async {
-    // TODO: Initialize state here
-  }
+  Future<void> _onStarted(_Started event, Emitter<HomeHomeState> emit) async {}
 }

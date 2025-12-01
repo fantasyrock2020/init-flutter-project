@@ -33,9 +33,7 @@ class TodoTodoBloc extends BaseBloc<TodoTodoEvent, TodoTodoState> {
   Future<void> _onGetAll(_GetAll event, Emitter<TodoTodoState> emit) async {
     callDataService(
       action: _todoRepository.getListTodo,
-      doOnSuccess: (List<TodoEntity> value) async {
-        print(value);
-      },
+      doOnSuccess: (List<TodoEntity> value) async {},
     );
   }
 

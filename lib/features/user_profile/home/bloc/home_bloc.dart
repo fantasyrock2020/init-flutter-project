@@ -21,9 +21,7 @@ class UserProfileHomeBloc
   Future<void> _onStarted(
     _Started event,
     Emitter<UserProfileHomeState> emit,
-  ) async {
-    // TODO: Initialize state here
-  }
+  ) async {}
 
   Future<void> _onIncrease(
     _Increase event,

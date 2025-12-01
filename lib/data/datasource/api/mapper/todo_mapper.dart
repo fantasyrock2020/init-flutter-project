@@ -11,7 +11,6 @@ class TodoMapper extends BaseDataMapper<TodoModel, TodoEntity> {
     if (data == null) {
       return null;
     }
-    print('here $data');
     return TodoEntity.fromJson(data.toJson());
   }
 
