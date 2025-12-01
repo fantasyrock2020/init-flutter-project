@@ -2,11 +2,8 @@ name: Flutter CI
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ main ]
+    tags: [ 'v*.*.*' ]
 
 permissions:
   contents: read
@@ -66,7 +63,9 @@ jobs:
           bundle install
 
       - name: Build APK
-        run: bundle exec fastlane android build_apk
+        run: |
+          cd android  
+          bundle exec fastlane build_apk
 
   build-ios:
     name: Build iOS
@@ -107,5 +106,7 @@ jobs:
           cd ios
           bundle install
 
-      - name: Build APK
-        run: bundle exec fastlane android build_apk
+      - name: Build IPA
+        run: |
+          cd ios
+          bundle exec fastlane build_ipa
