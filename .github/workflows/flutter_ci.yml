@@ -57,35 +57,35 @@ jobs:
         with:
           channel: stable
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: flutter pub get
 
-      - name: Run tests
+      - name: ✅ Run tests
         run: flutter test
 
-      - name: Analyze code
+      - name: 📝 Analyze code
         run: flutter analyze
       
-      - name: Setup Ruby & Bundler
+      - name: 💎 Setup Ruby & Bundler
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
 
-      - name: Bundle install
+      - name: 📦 Bundle install
         run: |
           cd android
           bundle install
 
-      - name: Build APK
+      - name: 🚀 Build APK
         run: |
           cd android  
           bundle exec fastlane build_apk
 
-      - name: Prepare artifacts
-        run: |
-          mkdir -p artifacts
-          cp build/app/outputs/flutter-apk/*.apk artifacts/
+      - uses: actions/upload-artifact@v3
+        with:
+          name: 🗂️ Android-APK File
+          path: build/app/outputs/flutter-apk/*.apk
 
   build-ios:
     name: Build iOS
@@ -106,27 +106,42 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: flutter pub get
 
-      - name: Run tests
+      - name: ✅ Run tests
         run: flutter test
 
-      - name: Analyze code
+      - name: 📝 Analyze code
         run: flutter analyze
 
-      - name: Setup Ruby & Bundler
+      - name: 💎 Setup Ruby & Bundler
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
 
-      - name: Bundle install
+      - name: 📦 Bundle install
         run: |
           cd ios
           bundle install
 
-      - name: Build IPA
+      - name: 🚀 Build IPA
         run: |
           cd ios
           bundle exec fastlane build_ipa
+
+      - name: 📦 Package IPA
+        run: |
+          APP_PATH=build/ios/iphoneos/Runner.app
+          IPA_DIR=build/ipa_output
+          mkdir -p "$IPA_DIR/Payload"
+          cp -R "$APP_PATH" "$IPA_DIR/Payload/"
+          (cd "$IPA_DIR" && zip -qry Runner.ipa Payload)
+          rm -rf "$IPA_DIR/Payload"
+          echo "Unsigned IPA created at $IPA_DIR/Runner.ipa"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: 🗂️ iOS-IPA File
+          path: build/ipa_output/Runner.ipa
