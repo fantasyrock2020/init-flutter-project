@@ -6,6 +6,7 @@ import '../../core/bloc/base_status/status_state.dart';
 import '../../core/bloc/language/language_cubit.dart';
 import '../../core/bloc/theme/theme_cubit.dart';
 import '../../core/constants/colors.dart';
+import '../../core/constants/typography.dart';
 import '../../core/di/injector.dart';
 
 abstract class BasePageStateFull<
@@ -25,6 +26,7 @@ abstract class BasePageStateFullDelegate<
   final B bloc = getIt.get<B>();
 
   AppColors get appColors => themeCubit.state.colors;
+  AppTextStyles get textStyles => themeCubit.state.textStyles;
   Locale get locale => languageCubit.state.locale;
 
   @override

@@ -27,7 +27,7 @@ class _HomeHomePageState extends BasePageStateFull<HomeHomePage, HomeHomeBloc> {
             },
             child: const Text('Push next'),
           ),
-          const Text('data'),
+          Text('data', style: textStyles.displayLarge),
         ],
       ),
     );

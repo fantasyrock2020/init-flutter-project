@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
-import 'typography.dart';
+import '../constants/typography.dart';
 
 class AppTheme {
   const AppTheme._();
@@ -13,11 +13,11 @@ class AppTheme {
       primary: const AppColors.light().primary,
       error: const AppColors.light().error,
     ),
-    extensions: <ThemeExtension<dynamic>>[
-      AppTypography.textThemeExtension.copyWith(
-        textColor: const AppColors.light().primary,
-      ),
-    ],
+    textTheme: TextTheme(
+      bodyLarge: AppTextStyles.light().bodyLarge,
+      bodyMedium: AppTextStyles.light().bodyMedium,
+      bodySmall: AppTextStyles.light().bodySmall,
+    ),
   );
 
   static ThemeData darkTheme = lightTheme.copyWith(
@@ -26,10 +26,10 @@ class AppTheme {
       primary: const AppColors.dark().primary,
       error: const AppColors.dark().error,
     ),
-    extensions: <ThemeExtension<dynamic>>[
-      AppTypography.textThemeExtension.copyWith(
-        textColor: const AppColors.dark().primary,
-      ),
-    ],
+    textTheme: TextTheme(
+      bodyLarge: AppTextStyles.dark().bodyLarge,
+      bodyMedium: AppTextStyles.dark().bodyMedium,
+      bodySmall: AppTextStyles.dark().bodySmall,
+    ),
   );
 }

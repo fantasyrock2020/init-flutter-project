@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ThemeState {
 
- ThemeMode get themeMode; ThemeData get themeData; AppColors get colors;
+ ThemeMode get themeMode; ThemeData get themeData; AppColors get colors; AppTextStyles get textStyles;
 /// Create a copy of ThemeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ThemeStateCopyWith<ThemeState> get copyWith => _$ThemeStateCopyWithImpl<ThemeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ThemeState&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.themeData, themeData) || other.themeData == themeData)&&(identical(other.colors, colors) || other.colors == colors));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ThemeState&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.themeData, themeData) || other.themeData == themeData)&&(identical(other.colors, colors) || other.colors == colors)&&(identical(other.textStyles, textStyles) || other.textStyles == textStyles));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,themeData,colors);
+int get hashCode => Object.hash(runtimeType,themeMode,themeData,colors,textStyles);
 
 @override
 String toString() {
-  return 'ThemeState(themeMode: $themeMode, themeData: $themeData, colors: $colors)';
+  return 'ThemeState(themeMode: $themeMode, themeData: $themeData, colors: $colors, textStyles: $textStyles)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ThemeStateCopyWith<$Res>  {
   factory $ThemeStateCopyWith(ThemeState value, $Res Function(ThemeState) _then) = _$ThemeStateCopyWithImpl;
 @useResult
 $Res call({
- ThemeMode themeMode, ThemeData themeData, AppColors colors
+ ThemeMode themeMode, ThemeData themeData, AppColors colors, AppTextStyles textStyles
 });
 
 
@@ -62,12 +62,13 @@ class _$ThemeStateCopyWithImpl<$Res>
 
 /// Create a copy of ThemeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? themeData = null,Object? colors = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? themeData = null,Object? colors = null,Object? textStyles = null,}) {
   return _then(_self.copyWith(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,themeData: null == themeData ? _self.themeData : themeData // ignore: cast_nullable_to_non_nullable
 as ThemeData,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
-as AppColors,
+as AppColors,textStyles: null == textStyles ? _self.textStyles : textStyles // ignore: cast_nullable_to_non_nullable
+as AppTextStyles,
   ));
 }
 
@@ -152,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  ThemeData themeData,  AppColors colors)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  ThemeData themeData,  AppColors colors,  AppTextStyles textStyles)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ThemeState() when $default != null:
-return $default(_that.themeMode,_that.themeData,_that.colors);case _:
+return $default(_that.themeMode,_that.themeData,_that.colors,_that.textStyles);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return $default(_that.themeMode,_that.themeData,_that.colors);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  ThemeData themeData,  AppColors colors)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  ThemeData themeData,  AppColors colors,  AppTextStyles textStyles)  $default,) {final _that = this;
 switch (_that) {
 case _ThemeState():
-return $default(_that.themeMode,_that.themeData,_that.colors);case _:
+return $default(_that.themeMode,_that.themeData,_that.colors,_that.textStyles);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +194,10 @@ return $default(_that.themeMode,_that.themeData,_that.colors);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  ThemeData themeData,  AppColors colors)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  ThemeData themeData,  AppColors colors,  AppTextStyles textStyles)?  $default,) {final _that = this;
 switch (_that) {
 case _ThemeState() when $default != null:
-return $default(_that.themeMode,_that.themeData,_that.colors);case _:
+return $default(_that.themeMode,_that.themeData,_that.colors,_that.textStyles);case _:
   return null;
 
 }
@@ -208,12 +209,13 @@ return $default(_that.themeMode,_that.themeData,_that.colors);case _:
 
 
 class _ThemeState implements ThemeState {
-  const _ThemeState({required this.themeMode, required this.themeData, required this.colors});
+  const _ThemeState({required this.themeMode, required this.themeData, required this.colors, required this.textStyles});
   
 
 @override final  ThemeMode themeMode;
 @override final  ThemeData themeData;
 @override final  AppColors colors;
+@override final  AppTextStyles textStyles;
 
 /// Create a copy of ThemeState
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +227,16 @@ _$ThemeStateCopyWith<_ThemeState> get copyWith => __$ThemeStateCopyWithImpl<_The
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ThemeState&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.themeData, themeData) || other.themeData == themeData)&&(identical(other.colors, colors) || other.colors == colors));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ThemeState&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.themeData, themeData) || other.themeData == themeData)&&(identical(other.colors, colors) || other.colors == colors)&&(identical(other.textStyles, textStyles) || other.textStyles == textStyles));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,themeMode,themeData,colors);
+int get hashCode => Object.hash(runtimeType,themeMode,themeData,colors,textStyles);
 
 @override
 String toString() {
-  return 'ThemeState(themeMode: $themeMode, themeData: $themeData, colors: $colors)';
+  return 'ThemeState(themeMode: $themeMode, themeData: $themeData, colors: $colors, textStyles: $textStyles)';
 }
 
 
@@ -245,7 +247,7 @@ abstract mixin class _$ThemeStateCopyWith<$Res> implements $ThemeStateCopyWith<$
   factory _$ThemeStateCopyWith(_ThemeState value, $Res Function(_ThemeState) _then) = __$ThemeStateCopyWithImpl;
 @override @useResult
 $Res call({
- ThemeMode themeMode, ThemeData themeData, AppColors colors
+ ThemeMode themeMode, ThemeData themeData, AppColors colors, AppTextStyles textStyles
 });
 
 
@@ -262,12 +264,13 @@ class __$ThemeStateCopyWithImpl<$Res>
 
 /// Create a copy of ThemeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? themeData = null,Object? colors = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? themeData = null,Object? colors = null,Object? textStyles = null,}) {
   return _then(_ThemeState(
 themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
 as ThemeMode,themeData: null == themeData ? _self.themeData : themeData // ignore: cast_nullable_to_non_nullable
 as ThemeData,colors: null == colors ? _self.colors : colors // ignore: cast_nullable_to_non_nullable
-as AppColors,
+as AppColors,textStyles: null == textStyles ? _self.textStyles : textStyles // ignore: cast_nullable_to_non_nullable
+as AppTextStyles,
   ));
 }
 
