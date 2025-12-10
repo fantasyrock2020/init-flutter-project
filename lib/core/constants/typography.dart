@@ -4,18 +4,125 @@ import 'colors.dart';
 
 class AppTextStyles {
   AppTextStyles._({required Color textColor}) {
-    displayLarge = TextStyle(fontSize: 12, color: textColor);
-    displayMedium = TextStyle(fontSize: 12, color: textColor);
-    displaySmall = TextStyle(fontSize: 12, color: textColor);
-    headlineLarge = TextStyle(fontSize: 12, color: textColor);
-    headlineMedium = TextStyle(fontSize: 12, color: textColor);
-    headlineSmall = TextStyle(fontSize: 12, color: textColor);
-    titleLarge = TextStyle(fontSize: 12, color: textColor);
-    titleMedium = TextStyle(fontSize: 12, color: textColor);
-    titleSmall = TextStyle(fontSize: 12, color: textColor);
-    bodyLarge = TextStyle(fontSize: 12, color: textColor);
-    bodyMedium = TextStyle(fontSize: 12, color: textColor);
-    bodySmall = TextStyle(fontSize: 12, color: textColor);
+    displayLarge = TextStyle(
+      fontSize: 57,
+      fontWeight: FontWeight.w400,
+      color: textColor,
+      letterSpacing: -0.25,
+      height: 1.12,
+    );
+
+    displayMedium = TextStyle(
+      fontSize: 45,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      color: textColor,
+      height: 1.16,
+    );
+
+    displaySmall = TextStyle(
+      color: textColor,
+      fontSize: 36,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.22,
+    );
+
+    headlineLarge = TextStyle(
+      color: textColor,
+      fontSize: 32,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.25,
+    );
+
+    headlineMedium = TextStyle(
+      color: textColor,
+      fontSize: 28,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.29,
+    );
+
+    headlineSmall = TextStyle(
+      color: textColor,
+      fontSize: 24,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.33,
+    );
+
+    titleLarge = TextStyle(
+      color: textColor,
+      fontSize: 22,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      height: 1.27,
+    );
+
+    titleMedium = TextStyle(
+      color: textColor,
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.15,
+      height: 1.50,
+    );
+
+    titleSmall = TextStyle(
+      color: textColor,
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.1,
+      height: 1.43,
+    );
+
+    bodyLarge = TextStyle(
+      color: textColor,
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.5,
+      height: 1.50,
+    );
+
+    bodyMedium = TextStyle(
+      color: textColor,
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.25,
+      height: 1.43,
+    );
+
+    bodySmall = TextStyle(
+      color: textColor,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.4,
+      height: 1.33,
+    );
+
+    labelLarge = TextStyle(
+      color: textColor,
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.1,
+      height: 1.43,
+    );
+
+    labelMedium = TextStyle(
+      color: textColor,
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.5,
+      height: 1.33,
+    );
+
+    labelSmall = TextStyle(
+      color: textColor,
+      fontSize: 11,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.5,
+      height: 1.45,
+    );
   }
 
   factory AppTextStyles.light() =>
@@ -36,4 +143,7 @@ class AppTextStyles {
   late final TextStyle bodyLarge;
   late final TextStyle bodyMedium;
   late final TextStyle bodySmall;
+  late final TextStyle labelLarge;
+  late final TextStyle labelMedium;
+  late final TextStyle labelSmall;
 }

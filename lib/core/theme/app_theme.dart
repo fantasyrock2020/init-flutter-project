@@ -17,6 +17,15 @@ class AppTheme {
       bodyLarge: AppTextStyles.light().bodyLarge,
       bodyMedium: AppTextStyles.light().bodyMedium,
       bodySmall: AppTextStyles.light().bodySmall,
+      headlineLarge: AppTextStyles.light().headlineLarge,
+      headlineMedium: AppTextStyles.light().headlineMedium,
+      headlineSmall: AppTextStyles.light().headlineSmall,
+      titleLarge: AppTextStyles.light().titleLarge,
+      titleMedium: AppTextStyles.light().titleMedium,
+      titleSmall: AppTextStyles.light().titleSmall,
+      labelLarge: AppTextStyles.light().labelLarge,
+      labelSmall: AppTextStyles.light().labelSmall,
+      labelMedium: AppTextStyles.light().labelMedium,
     ),
   );
 
@@ -30,6 +39,15 @@ class AppTheme {
       bodyLarge: AppTextStyles.dark().bodyLarge,
       bodyMedium: AppTextStyles.dark().bodyMedium,
       bodySmall: AppTextStyles.dark().bodySmall,
+      headlineLarge: AppTextStyles.dark().headlineLarge,
+      headlineMedium: AppTextStyles.dark().headlineMedium,
+      headlineSmall: AppTextStyles.dark().headlineSmall,
+      titleLarge: AppTextStyles.dark().titleLarge,
+      titleMedium: AppTextStyles.dark().titleMedium,
+      titleSmall: AppTextStyles.dark().titleSmall,
+      labelLarge: AppTextStyles.dark().labelLarge,
+      labelSmall: AppTextStyles.dark().labelSmall,
+      labelMedium: AppTextStyles.dark().labelMedium,
     ),
   );
 }
