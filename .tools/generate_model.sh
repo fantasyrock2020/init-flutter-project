@@ -17,14 +17,14 @@ to_pascal_case() {
 PascalName=$(to_pascal_case "$FEATURE_NAME")
 
 # Create file paths
-MODEL_PATH="../lib/data/models/$FEATURE_NAME/${FEATURE_NAME}_model.dart"
-MAPPER_PATH="../lib/data/datasource/api/mapper/${FEATURE_NAME}_mapper.dart"
-ENTITY_PATH="../lib/domain/entities/$FEATURE_NAME/${FEATURE_NAME}_entity.dart"
+MODEL_PATH="../data/lib/models/$FEATURE_NAME/${FEATURE_NAME}_model.dart"
+MAPPER_PATH="../data/lib/datasource/api/mapper/${FEATURE_NAME}_mapper.dart"
+ENTITY_PATH="../domain/lib/entities/$FEATURE_NAME/${FEATURE_NAME}_entity.dart"
 
 # Ensure folders exist
-mkdir -p ../lib/data/models/$FEATURE_NAME
-mkdir -p ../lib/data/datasource/api/mapper
-mkdir -p ../lib/domain/entities/$FEATURE_NAME
+mkdir -p ../data/lib/models/$FEATURE_NAME
+mkdir -p ../data/lib/datasource/api/mapper
+mkdir -p ../domain/lib/entities/$FEATURE_NAME
 
 # Create model file
 cat > "$MODEL_PATH" <<EOL
@@ -66,10 +66,10 @@ EOL
 
 # Create mapper file
 cat > "$MAPPER_PATH" <<EOL
+import 'package:core/data/network/mapper/base_mapper.dart' show BaseDataMapper;
+import 'package:domain/entities/$FEATURE_NAME/${FEATURE_NAME}_entity.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/data/network/mapper/base_mapper.dart';
-import '../../../../domain/entities/$FEATURE_NAME/${FEATURE_NAME}_entity.dart';
 import '../../../models/$FEATURE_NAME/${FEATURE_NAME}_model.dart';
 
 @lazySingleton
@@ -90,9 +90,9 @@ class ${PascalName}Mapper extends BaseDataMapper<${PascalName}Model, ${PascalNam
 EOL
 
 # Paths to barrel export files
-MODEL_EXPORT_FILE="../lib/data/models/models.dart"
-MAPPER_EXPORT_FILE="../lib/data/datasource/api/mapper/mapper.dart"
-ENTITY_EXPORT_FILE="../lib/domain/entities/entities.dart"
+MODEL_EXPORT_FILE="../data/lib/models/models.dart"
+MAPPER_EXPORT_FILE="../data/lib/datasource/api/mapper/mapper.dart"
+ENTITY_EXPORT_FILE="../domain/lib/entities/entities.dart"
 
 # Ensure barrel files exist
 touch "$MODEL_EXPORT_FILE"
@@ -124,10 +124,10 @@ fi
 
 # Build runner
 echo "Running data model..."
-cd .. && dart run build_runner build --build-filter "lib/data/models/$FEATURE_NAME/**"
+cd .. && cd data && dart run build_runner build --delete-conflicting-outputs
 
 echo "Running domain entity..."
-dart run build_runner build --build-filter "lib/domain/entities/$FEATURE_NAME/**"
+cd .. && cd domain && dart run build_runner build --delete-conflicting-outputs
 
 echo "Generated: $MODEL_PATH"
 echo "Generated: $ENTITY_PATH"

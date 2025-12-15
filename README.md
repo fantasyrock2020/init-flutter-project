@@ -34,7 +34,7 @@ The project uses a modular approach with separate packages for `domain`, `data`,
 └──────────────┬──────────────────────┘
                │
 ┌──────────────▼──────────────────────┐
-│        Domain Layer                  │
+│        Domain Layer                 │
 │  (Entities, Use Cases, Repositories)│
 └──────────────┬──────────────────────┘
                │
