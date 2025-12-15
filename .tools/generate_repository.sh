@@ -16,13 +16,13 @@ to_pascal_case() {
 PascalName=$(to_pascal_case "$FEATURE_NAME")
 
 # Paths
-DOMAIN_REPO_PATH="../lib/domain/repositories/${FEATURE_NAME}_repository.dart"
-DATA_REPO_PATH="../lib/data/repositories/${FEATURE_NAME}_repository_impl.dart"
-API_PATH="../lib/data/datasource/api/${FEATURE_NAME}/${FEATURE_NAME}_api.dart"
+DOMAIN_REPO_PATH="../domain/lib/repositories/${FEATURE_NAME}_repository.dart"
+DATA_REPO_PATH="../data/lib/repositories/${FEATURE_NAME}_repository_impl.dart"
+API_PATH="../data/lib/datasource/api/${FEATURE_NAME}/${FEATURE_NAME}_api.dart"
 
-mkdir -p ../lib/domain/repositories
-mkdir -p ../lib/data/repositories
-mkdir -p ../lib/data/datasource/api/${FEATURE_NAME}
+mkdir -p ../domain/lib/repositories
+mkdir -p ../data/lib/repositories
+mkdir -p ../data/lib/datasource/api/${FEATURE_NAME}
 
 # Domain Repository
 cat > "$DOMAIN_REPO_PATH" <<EOL
@@ -42,12 +42,12 @@ echo "Created: Domain Repository"
 
 # API
 cat > "$API_PATH" <<EOL
+import 'package:core/data/network/base/base_response.dart' show BaseResponse;
 import 'package:dio/dio.dart';
+import 'package:domain/entities/entities.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../../../core/data/network/base/base_response.dart';
-import '../../../../domain/entities/entities.dart';
 import '../../../models/${FEATURE_NAME}/${FEATURE_NAME}_model.dart';
 
 part '${FEATURE_NAME}_api.g.dart';
@@ -82,10 +82,10 @@ echo "Created: API"
 
 # Repository Implementation
 cat > "$DATA_REPO_PATH" <<EOL
+import 'package:core/data/network/base/base_response.dart' show BaseResponse;
+import 'package:domain/entities/entities.dart';
+import 'package:domain/repositories/${FEATURE_NAME}_repository.dart';
 import 'package:injectable/injectable.dart';
-import '../../core/data/network/base/base_response.dart';
-import '../../domain/entities/entities.dart';
-import '../../domain/repositories/${FEATURE_NAME}_repository.dart';
 import '../datasource/api/mapper/${FEATURE_NAME}_mapper.dart';
 import '../datasource/api/${FEATURE_NAME}/${FEATURE_NAME}_api.dart';
 import '../models/${FEATURE_NAME}/${FEATURE_NAME}_model.dart';
@@ -149,7 +149,7 @@ echo "Created: Repository Implementation"
 
 # Add export line domain/repository
 EXPORT_LINE="export '${FEATURE_NAME}_repository.dart';"
-FEATURE_ENTRY_FILE="../lib/domain/repositories/repositories.dart"
+FEATURE_ENTRY_FILE="../domain/lib/repositories/repositories.dart"
 
 append_export() {
   local line=$1
@@ -162,7 +162,7 @@ append_export "${EXPORT_LINE}"
 
 # Add export line data/repository
 EXPORT_LINE="export '${FEATURE_NAME}_repository_impl.dart';"
-FEATURE_ENTRY_FILE="../lib/data/repositories/repositories.dart"
+FEATURE_ENTRY_FILE="../data/lib/repositories/repositories.dart"
 
 append_export() {
   local line=$1
@@ -174,8 +174,8 @@ append_export() {
 append_export "${EXPORT_LINE}"
 
 # Build runner
-BASE_FOLDER_BUILD="lib/data/datasource/api/${FEATURE_NAME}"
+BASE_FOLDER_BUILD="data/lib/datasource/api/${FEATURE_NAME}"
 echo "Running build runner for: ${BASE_FOLDER_BUILD}..."
-cd .. && dart run build_runner build --build-filter "${BASE_FOLDER_BUILD}/**"
+cd .. && cd data && dart run build_runner build --delete-conflicting-outputs
 
 # End of script
