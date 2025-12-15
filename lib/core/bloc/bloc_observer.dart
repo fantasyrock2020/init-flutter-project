@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-
-import '../services/logger_service.dart';
+import 'package:core/services/logger_service.dart' show LoggerService;
 
 class MyBlocObserver extends BlocObserver with LoggerService {
   @override

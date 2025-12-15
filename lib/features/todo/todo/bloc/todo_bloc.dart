@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:domain/domain.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/bloc/base_bloc.dart';
-import '../../../../domain/entities/todo/todo_entity.dart';
-import '../../../../domain/repositories/repositories.dart';
 
 part 'todo_bloc.freezed.dart';
 part 'todo_event.dart';

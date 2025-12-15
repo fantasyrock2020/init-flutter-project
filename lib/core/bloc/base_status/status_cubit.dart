@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:core/core.dart' show BaseException, ErrorException;
 
-import '../../data/network/exception/exception.dart';
 import 'status_state.dart';
 
 class StatusCubit extends Cubit<StatusState> {

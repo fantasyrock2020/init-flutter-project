@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../constants/colors.dart';
-import '../../constants/typography.dart';
+import 'package:shared/theme/theme.dart';
 
 part 'theme_state.freezed.dart';
 

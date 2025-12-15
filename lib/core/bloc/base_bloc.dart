@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:core/data/network/exception/base_exception.dart'
+    show BaseException;
 import 'package:flutter/widgets.dart';
 
-import '../data/network/exception/base_exception.dart';
 import '../routing/app_router.dart';
 import 'base_status/status_cubit.dart';
 
-// ignore: avoid_types_as_parameter_names
-class BaseBloc<Event, State> extends BaseBlocDelegate<Event, State> {
+class BaseBloc<E, S> extends BaseBlocDelegate<E, S> {
   BaseBloc(super.initialState);
 }
 

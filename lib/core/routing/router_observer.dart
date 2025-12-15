@@ -1,6 +1,5 @@
+import 'package:core/services/logger_service.dart' show LoggerService;
 import 'package:flutter/material.dart';
-
-import '../services/logger_service.dart';
 
 class GoRouterObserver extends NavigatorObserver with LoggerService {
   String? currentRoute;
