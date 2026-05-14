@@ -1,275 +1,490 @@
 # Flutter Clean Architecture Project
 
-A Flutter project following Clean Architecture principles and SOLID design patterns, with a modular structure for scalability and maintainability.
+A production-ready Flutter starter template following **Clean Architecture** principles and **SOLID** design patterns. Built with a modular multi-package structure for maximum scalability, testability, and maintainability.
+
+---
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [Renaming the Project](#renaming-the-project)
-- [Development Tools](#development-tools)
-- [Code Generation](#code-generation)
+- [Overview](#-overview)
+- [Architecture](#-architecture)
+- [Project Structure](#-project-structure)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Code Generation Scripts](#-code-generation-scripts)
+- [CI/CD](#-cicd)
+- [Renaming the Project](#-renaming-the-project)
+- [Contributing](#-contributing)
+
+---
 
 ## 🎯 Overview
 
-This project is built using Flutter and implements Clean Architecture with clear separation of concerns across three main layers:
+This project is built using Flutter and implements **Clean Architecture** with clear separation of concerns across three main layers:
 
-- **Presentation Layer**: UI components, BLoC/Cubit for state management
-- **Domain Layer**: Business logic, Use cases, Repository interfaces
-- **Data Layer**: Repository implementations, Data sources, Models
+| Layer | Responsibility | Location |
+|-------|---------------|----------|
+| **Presentation** | UI components, BLoC/Cubit state management, Routing | `lib/` |
+| **Domain** | Business entities, Use cases, Repository interfaces | `domain/` |
+| **Data** | Data models, Data sources (API / Local), Repository implementations | `data/` |
 
-The project uses a modular approach with separate packages for `domain`, `data`, `core`, and `shared` components, making it easy to maintain and scale.
+Two additional shared packages provide cross-cutting concerns:
+
+| Package | Purpose | Location |
+|---------|---------|----------|
+| **Core** | DI, Networking (Dio), BLoC base classes, Extensions, Localization, Logger, Config | `packages/core/` |
+| **Shared** | Reusable UI components, Theme system, Images, TextFields | `packages/shared/` |
+
+---
 
 ## 🏗️ Architecture
 
 ### Clean Architecture Layers
 
 ```
-┌─────────────────────────────────────┐
-│      Presentation Layer             │
-│  (Features, BLoC, Widgets)          │
-└──────────────┬──────────────────────┘
-               │
-┌──────────────▼──────────────────────┐
-│        Domain Layer                 │
-│  (Entities, Use Cases, Repositories)│
-└──────────────┬──────────────────────┘
-               │
-┌──────────────▼──────────────────────┐
-│         Data Layer                  │
-│  (Models, Data Sources, Repos)      │
-└─────────────────────────────────────┘
+┌──────────────────────────────────────────────┐
+│           Presentation Layer                 │
+│   (Features, BLoC/Cubit, Widgets, Routing)   │
+└──────────────────┬───────────────────────────┘
+                   │
+┌──────────────────▼───────────────────────────┐
+│             Domain Layer                     │
+│   (Entities, Use Cases, Repository Contracts)│
+└──────────────────┬───────────────────────────┘
+                   │
+┌──────────────────▼───────────────────────────┐
+│              Data Layer                      │
+│   (Models, Mappers, API/Local Data Sources,  │
+│    Repository Implementations)               │
+└──────────────────────────────────────────────┘
+```
+
+### Dependency Graph
+
+```
+┌─────────────────┐     ┌──────────────────┐
+│   Presentation  │────▶│     Domain       │◀────┐
+│   (lib/)        │     │   (domain/)      │     │
+└────────┬────────┘     └──────────────────┘     │
+         │                                       │
+         │              ┌──────────────────┐     │
+         └─────────────▶│      Data        │─────┘
+                        │    (data/)       │
+                        └──────────────────┘
+                                 ▲
+┌─────────────────┐              │
+│     Core        │──────────────┘
+│ (packages/core) │
+└────────┬────────┘
+         │
+┌────────▼────────┐
+│    Shared       │
+│(packages/shared)│
+└─────────────────┘
 ```
 
 ### Key Principles
 
-- **Dependency Rule**: Dependencies point inward (Presentation → Domain ← Data)
-- **Separation of Concerns**: Each layer has a single responsibility
-- **Testability**: Business logic is independent of frameworks
-- **Maintainability**: Changes in one layer don't affect others
+- **Dependency Rule** — Dependencies point inward: `Presentation → Domain ← Data`
+- **Separation of Concerns** — Each layer has a single responsibility
+- **Testability** — Business logic is independent of frameworks and UI
+- **Maintainability** — Changes in one layer don't ripple across others
+- **Modularity** — Each package can be developed and tested in isolation
+
+---
 
 ## 📁 Project Structure
 
 ```
 project_structure/
-├── lib/                          # Main application code
-│   ├── core/                     # Core functionality
-│   │   ├── bloc/                 # Base BLoC classes and common BLoCs
-│   │   ├── constants/            # App constants
-│   │   ├── enums/                # Enumerations
-│   │   ├── extensions/           # Extension methods
-│   │   ├── routing/              # Navigation configuration
-│   │   └── asset_generator/      # Generated assets
-│   ├── di/                       # Dependency injection setup
-│   ├── features/                 # Feature modules
-│   │   └── my_app.dart           # Root app widget
-│   └── widget/                   # Shared widgets
+├── lib/                              # Presentation layer
+│   ├── main.dart                     # App entry point
+│   ├── constants/                    # App-wide constants & strings
+│   ├── di/                           # Dependency injection setup
+│   │   ├── data.injector.dart
+│   │   └── data.injector.module.dart
+│   ├── enums/                        # Application enumerations
+│   ├── features/                     # Feature modules
+│   │   ├── features.dart             # Feature barrel exports
+│   │   ├── my_app.dart               # Root MaterialApp widget
+│   │   └── home/                     # Home feature module
+│   │       └── home/                 # Home page (bloc, widget, page)
+│   ├── routing/                      # Navigation configuration
+│   │   ├── app_router.dart           # GoRouter setup
+│   │   ├── app_routes.dart           # Route constants
+│   │   └── router_observer.dart      # Navigation observer
+│   └── widget/                       # Shared presentation widgets
+│       └── base_state/               # Base StatefulWidget helpers
 │
-├── domain/                       # Domain layer (package)
+├── domain/                           # Domain layer (package)
 │   └── lib/
-│       ├── entities/             # Business entities
-│       ├── repositories/         # Repository interfaces
-│       └── usecases/             # Business use cases
+│       ├── domain.dart               # Domain barrel export
+│       ├── entities/                 # Business entities (Freezed)
+│       ├── repositories/             # Repository interfaces (contracts)
+│       └── usecases/                 # Business use cases
 │
-├── data/                         # Data layer (package)
+├── data/                             # Data layer (package)
 │   └── lib/
-│       ├── datasource/           # Data sources
-│       │   ├── api/              # Remote API
-│       │   └── local/            # Local storage
-│       ├── models/               # Data models
-│       └── repositories/         # Repository implementations
+│       ├── data.dart                 # Data barrel export
+│       ├── datasource/
+│       │   ├── api/                  # Remote API (Retrofit + Dio)
+│       │   │   └── mapper/           # Model ↔ Entity mappers
+│       │   └── local/                # Local storage data sources
+│       ├── di/                       # Data-layer DI module
+│       ├── models/                   # Data models (Freezed + JSON)
+│       └── repositories/             # Repository implementations
 │
-├── packages/                     # Shared packages
-│   ├── core/                     # Core utilities
-│   └── shared/                   # Shared UI components
+├── packages/
+│   ├── core/                         # Core utilities package
+│   │   └── lib/
+│   │       ├── core.dart             # Core barrel export
+│   │       ├── asset_generator/      # FlutterGen generated assets
+│   │       ├── bloc/                 # Base BLoC, BlocObserver,
+│   │       │   ├── base_bloc.dart    #   ThemeCubit, LanguageCubit
+│   │       │   ├── base_status/      #   Centralized status handling
+│   │       │   ├── language/         #   Multi-language state
+│   │       │   └── theme/            #   Light/Dark theme state
+│   │       ├── config/               # Localization & Route config
+│   │       ├── data/
+│   │       │   ├── network/          # Dio client, interceptors,
+│   │       │   │   ├── base/         #   base response, exceptions
+│   │       │   │   ├── dio/
+│   │       │   │   ├── exception/
+│   │       │   │   └── mapper/       # Base data mapper
+│   │       │   └── share_preference/ # SharedPreferences helpers
+│   │       ├── di/                   # Injectable configuration
+│   │       ├── extensions/           # Dart extension methods
+│   │       │   ├── context_extension.dart
+│   │       │   ├── date_time_extension.dart
+│   │       │   ├── num_extension.dart
+│   │       │   └── string_extension.dart
+│   │       ├── l10n/                 # Localization (ARB → Dart)
+│   │       │   └── locale/           # ARB files (app_en.arb, ...)
+│   │       └── services/             # Logger service
+│   │
+│   └── shared/                       # Shared UI package
+│       └── lib/
+│           ├── image/                # Image components
+│           ├── text_field/           # TextField components
+│           └── theme/                # Theme system
+│               ├── app_colors.dart   #   Color palette
+│               ├── app_text_style.dart #  Typography
+│               └── app_theme.dart    #   ThemeData builder
 │
-├── .tools/                       # Development scripts
-│   ├── generate_model.sh         # Generate model files
-│   ├── generate_repository.sh    # Generate repository files
-│   └── generate_structure.sh     # Generate feature structure
+├── .tools/                           # Code generation scripts
+│   ├── generate_model.sh             # Generate Model + Entity + Mapper
+│   ├── generate_repository.sh        # Generate Repo + API + Impl
+│   └── generate_structure.sh         # Generate Feature page scaffold
 │
-├── android/                      # Android platform files
-├── ios/                          # iOS platform files
-├── web/                          # Web platform files
-├── macos/                        # macOS platform files
-├── linux/                        # Linux platform files
-└── windows/                      # Windows platform files
+├── .github/
+│   ├── ISSUE_TEMPLATE/               # Bug report & feature request
+│   └── workflows/
+│       └── flutter_ci.yml            # CI pipeline (Android + iOS)
+│
+├── android/                          # Android platform
+├── ios/                              # iOS platform
+├── macos/                            # macOS platform
+├── web/                              # Web platform
+├── linux/                            # Linux platform
+├── windows/                          # Windows platform
+│
+├── pubspec.yaml                      # Root dependencies
+├── analysis_options.yaml             # Comprehensive lint rules
+├── flutter_launcher_icons.yaml       # App icon configuration
+└── .fvmrc                            # Flutter version (3.35.7)
 ```
 
-## ✨ Features
+---
 
-### Current Features
+## 🛠️ Tech Stack
 
-- **Theme Management**: Light/Dark theme support
-- **Internationalization**: Multi-language support
-- **Routing**: Navigation with GoRouter
+### Core Dependencies
 
-### State Management
+| Category | Package | Purpose |
+|----------|---------|---------|
+| **State Management** | `flutter_bloc` / `bloc` | BLoC & Cubit pattern |
+| **Dependency Injection** | `get_it` + `injectable` | Service locator with code gen |
+| **Navigation** | `go_router` | Declarative routing |
+| **Networking** | `dio` + `retrofit` | HTTP client + type-safe API |
+| **Serialization** | `freezed` + `json_serializable` + `json_annotation` | Immutable models & JSON |
+| **Localization** | `flutter_localizations` + `intl` | Multi-language support (ARB) |
+| **Storage** | `shared_preferences` + `flutter_secure_storage` | Local data persistence |
+| **UI Utilities** | `flutter_svg`, `cached_network_image`, `shimmer` | Image & loading components |
+| **Permissions** | `permission_handler` | Runtime permission requests |
+| **Connectivity** | `connectivity_plus` | Network status monitoring |
+| **Logging** | `logger` | Structured logging |
+| **Assets** | `flutter_gen_runner` | Type-safe asset references |
+| **Icons** | `flutter_launcher_icons` | App icon generation |
+| **UUID** | `uuid` | Unique identifier generation |
+| **Storage** | `path_provider` | Platform file paths |
 
-- **BLoC Pattern**: Using `flutter_bloc` for state management
-- **Base BLoC**: Reusable base classes for common functionality
-- **Status Management**: Centralized status handling
+### Dev Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| `build_runner` | Code generation runner |
+| `injectable_generator` | DI code generation |
+| `freezed` | Immutable class generation |
+| `retrofit_generator` | API client generation |
+| `flutter_gen_runner` | Asset code generation |
+| `flutter_lints` | Lint rules |
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Flutter SDK (>=3.10.0)
-- Dart SDK (>=3.10.0)
+| Tool | Version |
+|------|---------|
+| Flutter SDK | `>=3.35.7` (managed via [FVM](https://fvm.app)) |
+| Dart SDK | `>=3.10.0 <4.0.0` |
+| Java (Android) | `17` |
+| Ruby (Fastlane) | `3.4` |
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone <repository-url>
    cd project_structure
    ```
 
-2. **Install dependencies**
+2. **Install Flutter version (if using FVM)**
+
    ```bash
-   flutter pub get
+   fvm install
+   fvm use
    ```
 
-3. **Install dependencies for packages**
+3. **Install all dependencies**
+
    ```bash
+   # Root project
+   flutter pub get
+
+   # Sub-packages
    cd domain && flutter pub get && cd ..
    cd data && flutter pub get && cd ..
    cd packages/core && flutter pub get && cd ../..
    cd packages/shared && flutter pub get && cd ../..
    ```
 
-4. **Generate code**
+4. **Run code generation**
+
    ```bash
+   # Root project
    dart run build_runner build --delete-conflicting-outputs
+
+   # Domain package
+   cd domain && dart run build_runner build --delete-conflicting-outputs && cd ..
+
+   # Data package
+   cd data && dart run build_runner build --delete-conflicting-outputs && cd ..
+
+   # Core package
+   cd packages/core && dart run build_runner build --delete-conflicting-outputs && cd ../..
    ```
 
 5. **Run the app**
+
    ```bash
    flutter run
    ```
 
-## 🔄 Renaming the Project
+---
 
-To rename this project from `project_structure` to your desired project name, follow these steps:
+## ⚙️ Code Generation Scripts
 
-### Step 1: Rename the Root Directory
+Located in `.tools/` — these scripts automate boilerplate generation and follow the project's architecture conventions.
+
+### Make scripts executable
 
 ```bash
-# Navigate to the parent directory
-cd ..
+chmod +x .tools/generate_model.sh .tools/generate_repository.sh .tools/generate_structure.sh
+```
 
-# Rename the project directory
+### 1. Generate Feature Page
+
+Scaffolds a complete feature page with BLoC, events, state, and widget files.
+
+```bash
+cd .tools && ./generate_structure.sh <feature_name> <page_name>
+```
+
+**Example:**
+```bash
+./generate_structure.sh auth sign_in
+```
+
+**Creates:**
+```
+lib/features/auth/
+└── sign_in/
+    ├── sign_in_page.dart          # StatefulWidget page
+    ├── bloc/
+    │   ├── sign_in_bloc.dart      # BLoC with BaseBloc
+    │   ├── sign_in_event.dart     # Freezed events
+    │   └── sign_in_state.dart     # Freezed state
+    └── widget/                    # Page-specific widgets
+```
+
+Also auto-exports the page in feature barrel files and runs `build_runner`.
+
+### 2. Generate Model + Entity + Mapper
+
+Creates a data model, domain entity, and mapper between them.
+
+```bash
+cd .tools && ./generate_model.sh <model_name>
+```
+
+**Example:**
+```bash
+./generate_model.sh district
+```
+
+**Creates:**
+```
+data/lib/models/district/district_model.dart           # Freezed model
+domain/lib/entities/district/district_entity.dart       # Freezed entity
+data/lib/datasource/api/mapper/district_mapper.dart     # Model ↔ Entity mapper
+```
+
+Also auto-exports in barrel files and runs `build_runner` for both `data` and `domain`.
+
+### 3. Generate Repository + API
+
+Creates a domain repository interface, Retrofit API client, and data repository implementation.
+
+```bash
+cd .tools && ./generate_repository.sh <feature_name>
+```
+
+**Example:**
+```bash
+./generate_repository.sh province
+```
+
+**Creates:**
+```
+domain/lib/repositories/province_repository.dart             # Abstract repository
+data/lib/datasource/api/province/province_api.dart           # Retrofit API client
+data/lib/repositories/province_repository_impl.dart          # Repository implementation
+```
+
+Includes CRUD operations (`getList`, `getPaging`, `insert`, `update`, `delete`, `getByID`) out of the box.
+
+---
+
+## 🔧 Build Runner Commands
+
+```bash
+# Generate all code
+dart run build_runner build --delete-conflicting-outputs
+
+# Watch mode (auto-regenerate on file changes)
+dart run build_runner watch --delete-conflicting-outputs
+
+# Generate for a specific directory
+dart run build_runner build --build-filter "lib/features/**"
+```
+
+---
+
+## 🔄 CI/CD
+
+The project includes a **GitHub Actions** CI pipeline (`.github/workflows/flutter_ci.yml`) that triggers on pushes to `main` and version tags (`v*.*.*`).
+
+### Pipeline Jobs
+
+| Job | Runner | Steps |
+|-----|--------|-------|
+| **Build Android** | `ubuntu-latest` | Cache → Java 17 → Flutter → `pub get` → Test → Analyze → Fastlane `build_apk` → Upload APK artifact |
+| **Build iOS** | `macos-latest` | Cache → Flutter → `pub get` → Test → Analyze → Fastlane `build_ios` → Package IPA → Upload IPA artifact |
+
+### Issue Templates
+
+- 🐛 **Bug Report** — `.github/ISSUE_TEMPLATE/bug_report.md`
+- ✨ **Feature Request** — `.github/ISSUE_TEMPLATE/feature_request.md`
+
+---
+
+## 🔄 Renaming the Project
+
+To rename this project from `project_structure` to your desired name:
+
+### Step 1: Rename the root directory
+
+```bash
+cd ..
 mv project_structure your_project_name
 cd your_project_name
 ```
 
-### Step 2: Update pubspec.yaml
-
-Update the `name` field in the root `pubspec.yaml`:
+### Step 2: Update `pubspec.yaml`
 
 ```yaml
-name: your_project_name  # Change from 'project_structure'
+name: your_project_name
 description: "Your project description"
 ```
 
-### Step 3: Update Import Statements
-
-Search and replace all import statements that reference `project_structure`:
+### Step 3: Replace all import references
 
 ```bash
 # Find all occurrences
 grep -r "project_structure" --include="*.dart" .
 
-# Replace in all Dart files (use your preferred method)
-# Option 1: Using sed (macOS/Linux)
+# Replace in all Dart files (macOS/Linux)
 find . -name "*.dart" -type f -exec sed -i '' 's/project_structure/your_project_name/g' {} +
-
-# Option 2: Using find and replace in your IDE
-# Search: project_structure
-# Replace: your_project_name
 ```
 
-### Step 4: Update Android Configuration
+### Step 4: Update Android configuration
 
-**`android/settings.gradle`:**
-```gradle
-rootProject.name = 'your_project_name'  // Update if needed
+- `android/settings.gradle` → `rootProject.name`
+- `android/app/build.gradle` → `applicationId`
+
+### Step 5: Update iOS configuration
+
+- `ios/Runner.xcodeproj/project.pbxproj` → search & replace
+- `ios/Runner/Info.plist` → `CFBundleName`, `CFBundleDisplayName`
+
+### Step 6: Update the `core` package reference
+
+In `packages/core/pubspec.yaml`, update the path dependency name:
+
+```yaml
+your_project_name:
+  path: '../../'
 ```
 
-**`android/app/build.gradle`:**
-```gradle
-applicationId "com.example.your_project_name"  // Update package name
-```
-
-### Step 5: Update iOS Configuration
-
-**`ios/Runner.xcodeproj/project.pbxproj`:**
-- Search for `project_structure` and replace with `your_project_name`
-
-**`ios/Runner/Info.plist`:**
-- Update `CFBundleName` and `CFBundleDisplayName` if needed
-
-### Step 6: Clean and Rebuild
+### Step 7: Clean & rebuild
 
 ```bash
-# Clean build files
 flutter clean
-
-# Get dependencies again
 flutter pub get
-
-# Generate code
 dart run build_runner build --delete-conflicting-outputs
-
-# Verify the project works
 flutter run
 ```
 
-> **Note**: After renaming, make sure to test the app on all target platforms (Android, iOS, Web, etc.) to ensure everything works correctly.
+> **Note:** Test on all target platforms (Android, iOS, Web, macOS, etc.) after renaming.
 
-## 🛠️ Development Tools
+---
 
-### Scripts
+## 🤝 Contributing
 
-Make scripts executable:
-```bash
-cd .tools && chmod +x generate_model.sh generate_repository.sh generate_structure.sh
-```
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Use the provided code generation scripts to maintain architecture consistency
+4. Run `flutter analyze` and `flutter test` before committing
+5. Submit a Pull Request using the provided issue templates
 
-#### Generate Model
-```bash
-./generate_model.sh
-```
+---
 
-#### Generate Repository
-```bash
-./generate_repository.sh
-```
+## 📄 License
 
-#### Generate Feature Structure
-```bash
-./generate_structure.sh
-```
-
-## 🔧 Code Generation
-
-Generate all code:
-```bash
-dart run build_runner build --delete-conflicting-outputs
-```
-
-Watch mode (auto-regenerate on changes):
-```bash
-dart run build_runner watch --delete-conflicting-outputs
-```
-
-Generate for specific files:
-```bash
-dart run build_runner build --build-filter "lib/features/**"
-```
+This project is provided as a starter template. See the [LICENSE](LICENSE) file for details.
 
 ---
 

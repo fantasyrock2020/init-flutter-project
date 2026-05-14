@@ -47,12 +47,12 @@ class CImageView extends StatelessWidget {
         filterQuality: filterQuality,
         progressIndicatorBuilder:
             progressIndicatorBuilder ??
-            (context, url, progress) {
-              return CircularProgressIndicator();
+            (BuildContext context, String url, DownloadProgress progress) {
+              return const CircularProgressIndicator();
             },
         errorWidget:
             errorBuilder ??
-            (context, url, error) {
+            (BuildContext context, String url, Object error) {
               return emptyWidget ?? wd;
             },
       );
