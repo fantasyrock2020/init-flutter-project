@@ -87,101 +87,51 @@ Two additional shared packages provide cross-cutting concerns:
 
 ```
 project_structure/
-├── lib/                              # Presentation layer
-│   ├── main.dart                     # App entry point
-│   ├── constants/                    # App-wide constants & strings
-│   ├── di/                           # Dependency injection setup
-│   │   ├── data.injector.dart
-│   │   └── data.injector.module.dart
-│   ├── enums/                        # Application enumerations
-│   ├── features/                     # Feature modules
-│   │   ├── features.dart             # Feature barrel exports
-│   │   ├── my_app.dart               # Root MaterialApp widget
-│   │   └── home/                     # Home feature module
-│   │       └── home/                 # Home page (bloc, widget, page)
-│   ├── routing/                      # Navigation configuration
-│   │   ├── app_router.dart           # GoRouter setup
-│   │   ├── app_routes.dart           # Route constants
-│   │   └── router_observer.dart      # Navigation observer
-│   └── widget/                       # Shared presentation widgets
-│       └── base_state/               # Base StatefulWidget helpers
+├── lib/                          # 🎨 Presentation Layer
+│   ├── main.dart                 # App entry point
+│   ├── constants/                # App-wide constants & strings
+│   ├── di/                       # Dependency injection setup
+│   ├── enums/                    # Application enumerations
+│   ├── features/                 # Feature modules (BLoC per feature)
+│   ├── routing/                  # GoRouter navigation
+│   └── widget/                   # Shared presentation widgets
 │
-├── domain/                           # Domain layer (package)
+├── domain/                       # 🏛️ Domain Layer (package)
 │   └── lib/
-│       ├── domain.dart               # Domain barrel export
-│       ├── entities/                 # Business entities (Freezed)
-│       ├── repositories/             # Repository interfaces (contracts)
-│       └── usecases/                 # Business use cases
+│       ├── entities/             # Business entities (Freezed)
+│       ├── repositories/         # Repository contracts (interfaces)
+│       └── usecases/             # Business use cases
 │
-├── data/                             # Data layer (package)
+├── data/                         # 💾 Data Layer (package)
 │   └── lib/
-│       ├── data.dart                 # Data barrel export
 │       ├── datasource/
-│       │   ├── api/                  # Remote API (Retrofit + Dio)
-│       │   │   └── mapper/           # Model ↔ Entity mappers
-│       │   └── local/                # Local storage data sources
-│       ├── di/                       # Data-layer DI module
-│       ├── models/                   # Data models (Freezed + JSON)
-│       └── repositories/             # Repository implementations
+│       │   ├── api/              # Remote API clients (Retrofit)
+│       │   └── local/            # Local storage data sources
+│       ├── di/                   # Data-layer DI module
+│       ├── models/               # Data models (Freezed + JSON)
+│       └── repositories/         # Repository implementations
 │
 ├── packages/
-│   ├── core/                         # Core utilities package
+│   ├── core/                     # ⚙️ Core Utilities Package
+│   │   ├── assets/               # Icons & images
 │   │   └── lib/
-│   │       ├── core.dart             # Core barrel export
-│   │       ├── asset_generator/      # FlutterGen generated assets
-│   │       ├── bloc/                 # Base BLoC, BlocObserver,
-│   │       │   ├── base_bloc.dart    #   ThemeCubit, LanguageCubit
-│   │       │   ├── base_status/      #   Centralized status handling
-│   │       │   ├── language/         #   Multi-language state
-│   │       │   └── theme/            #   Light/Dark theme state
-│   │       ├── config/               # Localization & Route config
-│   │       ├── data/
-│   │       │   ├── network/          # Dio client, interceptors,
-│   │       │   │   ├── base/         #   base response, exceptions
-│   │       │   │   ├── dio/
-│   │       │   │   ├── exception/
-│   │       │   │   └── mapper/       # Base data mapper
-│   │       │   └── share_preference/ # SharedPreferences helpers
-│   │       ├── di/                   # Injectable configuration
-│   │       ├── extensions/           # Dart extension methods
-│   │       │   ├── context_extension.dart
-│   │       │   ├── date_time_extension.dart
-│   │       │   ├── num_extension.dart
-│   │       │   └── string_extension.dart
-│   │       ├── l10n/                 # Localization (ARB → Dart)
-│   │       │   └── locale/           # ARB files (app_en.arb, ...)
-│   │       └── services/             # Logger service
+│   │       ├── asset_generator/  # FlutterGen generated assets
+│   │       ├── bloc/             # Base BLoC, BlocObserver, Theme & Language cubits
+│   │       ├── config/           # Localization & route config
+│   │       ├── data/             # Dio client, interceptors, exceptions
+│   │       ├── di/               # Injectable (GetIt) configuration
+│   │       ├── extensions/       # Context, DateTime, Num, String extensions
+│   │       ├── l10n/             # Localization (ARB → Dart)
+│   │       └── services/         # Logger service
 │   │
-│   └── shared/                       # Shared UI package
-│       └── lib/
-│           ├── image/                # Image components
-│           ├── text_field/           # TextField components
-│           └── theme/                # Theme system
-│               ├── app_colors.dart   #   Color palette
-│               ├── app_text_style.dart #  Typography
-│               └── app_theme.dart    #   ThemeData builder
+│   └── shared/                   # 🎨 Shared UI Package
 │
-├── .tools/                           # Code generation scripts
-│   ├── generate_model.sh             # Generate Model + Entity + Mapper
-│   ├── generate_repository.sh        # Generate Repo + API + Impl
-│   └── generate_structure.sh         # Generate Feature page scaffold
+├── .tools/                       # 🔧 Code generation scripts
+├── .github/                      # CI/CD workflows & issue templates
 │
-├── .github/
-│   ├── ISSUE_TEMPLATE/               # Bug report & feature request
-│   └── workflows/
-│       └── flutter_ci.yml            # CI pipeline (Android + iOS)
-│
-├── android/                          # Android platform
-├── ios/                              # iOS platform
-├── macos/                            # macOS platform
-├── web/                              # Web platform
-├── linux/                            # Linux platform
-├── windows/                          # Windows platform
-│
-├── pubspec.yaml                      # Root dependencies
-├── analysis_options.yaml             # Comprehensive lint rules
-├── flutter_launcher_icons.yaml       # App icon configuration
-└── .fvmrc                            # Flutter version (3.35.7)
+├── pubspec.yaml                  # Root dependencies
+├── analysis_options.yaml         # Lint rules
+└── flutter_launcher_icons.yaml   # App icon config
 ```
 
 ---
