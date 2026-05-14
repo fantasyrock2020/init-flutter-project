@@ -1,2 +1,1 @@
-# Inherits all lint rules from the root project
 include: ../analysis_options.yaml
