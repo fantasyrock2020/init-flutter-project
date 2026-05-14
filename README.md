@@ -71,16 +71,6 @@ Two additional shared packages provide cross-cutting concerns:
          └─────────────▶│      Data        │─────┘
                         │    (data/)       │
                         └──────────────────┘
-                                 ▲
-┌─────────────────┐              │
-│     Core        │──────────────┘
-│ (packages/core) │
-└────────┬────────┘
-         │
-┌────────▼────────┐
-│    Shared       │
-│(packages/shared)│
-└─────────────────┘
 ```
 
 ### Key Principles
