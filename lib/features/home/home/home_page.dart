@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared/image/c_image.dart';
 
-import '../../../core/routing/app_routes.dart';
+import '../../../routing/app_routes.dart';
 import '../../../widget/base_state/base_state_full_widget.dart';
 import 'bloc/home_bloc.dart';
 

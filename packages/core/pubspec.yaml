@@ -14,29 +14,59 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  get_it: ^9.0.5
-  injectable: ^2.6.0
-  dio: ^5.9.0
-  path_provider: ^2.1.5
+  dio: ^5.9.2
   freezed_annotation: ^3.1.0
-  json_annotation: ^4.9.0
-  json_serializable: ^6.11.1
-
+  get_it: ^9.2.1
+  injectable: ^2.7.1+4
+  json_annotation: ^4.11.0
+  json_serializable: ^6.13.0
+  logger: ^2.6.2
   data:
     path: '../../data'
+
+  domain:
+    path: '../../domain'
 
   project_structure:
     path: '../../'
 
-  logger: ^2.6.2
+  flutter_secure_storage: ^10.0.0
+  bloc: ^9.2.1
+  intl: ^0.20.2
+
+  shared:
+    path: '../shared'
+  shared_preferences: ^2.5.4
+  flutter_bloc: ^9.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
     
   flutter_lints: ^6.0.0
-  build_runner: ^2.10.1
+  build_runner: ^2.15.0
   injectable_generator: ^2.9.1
   freezed: ^3.2.3
+  flutter_gen_runner: ^5.14.1
+
+flutter_gen:
+  output: lib/asset_generator/
+  line_length: 80
+
+  integrations:
+    image: true
+    flutter_svg: true
+
+  assets:
+    enabled: true
+    outputs:
+      class_name: MyAssets
+      style: camel-case
 
 flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/

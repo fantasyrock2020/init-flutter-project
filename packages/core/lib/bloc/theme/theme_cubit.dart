@@ -1,0 +1,54 @@
+import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:shared/theme/theme.dart';
+
+part 'theme_state.dart';
+part 'theme_cubit.freezed.dart';
+
+class ThemeCubit extends Cubit<ThemeState> {
+  ThemeCubit()
+    : super(
+        ThemeState(
+          themeMode: ThemeMode.light,
+          themeData: AppTheme.lightTheme,
+          colors: const AppColors.light(),
+          textStyles: AppTextStyles.light(),
+        ),
+      );
+
+  void getSystemThemeAndSync() {
+    final Brightness brightness =
+        SchedulerBinding.instance.platformDispatcher.platformBrightness;
+    if (brightness == Brightness.dark) {
+      changTheme(ThemeMode.dark);
+    } else {
+      changTheme(ThemeMode.light);
+    }
+  }
+
+  void changTheme(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.dark:
+        emit(
+          state.copyWith(
+            themeMode: ThemeMode.dark,
+            themeData: AppTheme.darkTheme,
+            colors: const AppColors.dark(),
+            textStyles: AppTextStyles.dark(),
+          ),
+        );
+        break;
+      default:
+        emit(
+          state.copyWith(
+            themeMode: ThemeMode.light,
+            themeData: AppTheme.lightTheme,
+            colors: const AppColors.light(),
+            textStyles: AppTextStyles.light(),
+          ),
+        );
+    }
+  }
+}

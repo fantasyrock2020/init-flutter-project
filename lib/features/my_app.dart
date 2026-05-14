@@ -1,13 +1,8 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../core/asset_generator/l10n/app_localizations.dart';
-import '../core/bloc/language/language_cubit.dart';
-import '../core/bloc/language/language_state.dart';
-import '../core/bloc/theme/theme_cubit.dart';
-import '../core/bloc/theme/theme_state.dart';
-import '../core/extensions/context_extension.dart';
-import '../core/routing/app_router.dart';
+import '../routing/app_router.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,7 +24,7 @@ class MyApp extends StatelessWidget {
                 routerConfig: AppRouter.router,
                 themeMode: themeState.themeMode,
                 theme: themeState.themeData,
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                localizationsDelegates: AppLocalizationConfig.delegates,
                 supportedLocales: languageState.supportedLocales,
                 locale: languageState.locale,
                 builder: (BuildContext context, Widget? child) {

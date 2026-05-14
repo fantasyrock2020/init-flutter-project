@@ -1,14 +1,9 @@
 import 'dart:async';
 
-import 'package:core/di/injector.dart' show getIt;
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared/theme/theme.dart';
-import '../../core/bloc/base_bloc.dart';
-import '../../core/bloc/base_status/status_cubit.dart';
-import '../../core/bloc/base_status/status_state.dart';
-import '../../core/bloc/language/language_cubit.dart';
-import '../../core/bloc/theme/theme_cubit.dart';
 
 abstract class BasePageStateFull<
   T extends StatefulWidget,
