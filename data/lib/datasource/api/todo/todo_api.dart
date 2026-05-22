@@ -1,7 +1,5 @@
-import 'package:core/data/network/base/base_response.dart' show BaseResponse;
-import 'package:dio/dio.dart';
+import 'package:core/core.dart';
 import 'package:domain/entities/entities.dart';
-import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../models/todo/todo_model.dart';

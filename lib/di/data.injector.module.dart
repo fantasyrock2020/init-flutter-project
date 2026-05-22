@@ -1,4 +1,3 @@
-//@GeneratedMicroModule;ProjectStructurePackageModule;package:project_structure/di/data.injector.module.dart
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
 // coverage:ignore-file

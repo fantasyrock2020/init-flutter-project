@@ -8,7 +8,6 @@ import 'injector.config.dart';
 final GetIt getIt = GetIt.instance;
 
 @InjectableInit(
-  includeMicroPackages: false,
   externalPackageModulesBefore: <ExternalModule>[
     ExternalModule(ProjectStructurePackageModule),
     ExternalModule(DataPackageModule),

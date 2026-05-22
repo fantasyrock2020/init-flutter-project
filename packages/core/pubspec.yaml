@@ -8,6 +8,8 @@ environment:
   sdk: ^3.10.1
   flutter: ">=1.17.0"
 
+resolution: workspace
+
 dependencies:
   flutter:
     sdk: flutter
@@ -17,10 +19,10 @@ dependencies:
   dio: ^5.9.2
   freezed_annotation: ^3.1.0
   get_it: ^9.2.1
-  injectable: ^2.7.1+4
-  json_annotation: ^4.11.0
-  json_serializable: ^6.13.0
-  logger: ^2.6.2
+  injectable: ^3.0.0
+  json_annotation: ^4.12.0
+  json_serializable: ^6.14.0
+  logger: ^2.7.0
   data:
     path: '../../data'
 
@@ -38,14 +40,14 @@ dependencies:
     path: '../shared'
   shared_preferences: ^2.5.4
   flutter_bloc: ^9.1.1
+  connectivity_plus: ^7.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
     
-  flutter_lints: ^6.0.0
   build_runner: ^2.15.0
-  injectable_generator: ^2.9.1
+  injectable_generator: ^3.0.2
   freezed: ^3.2.3
   flutter_gen_runner: ^5.14.1
 

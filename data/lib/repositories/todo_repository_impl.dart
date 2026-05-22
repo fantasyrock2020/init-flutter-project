@@ -1,7 +1,7 @@
+import 'package:core/core.dart' show LazySingleton;
 import 'package:core/data/network/base/base_response.dart' show BaseResponse;
 import 'package:domain/entities/entities.dart';
 import 'package:domain/repositories/repositories.dart';
-import 'package:injectable/injectable.dart';
 import '../datasource/api/mapper/todo_mapper.dart';
 import '../datasource/api/todo/todo_api.dart';
 import '../models/todo/todo_model.dart';
