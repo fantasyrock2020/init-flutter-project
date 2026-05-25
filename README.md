@@ -177,10 +177,10 @@ project_structure/
 
 | Tool | Version |
 |------|---------|
-| Flutter SDK | `>=3.35.7` (managed via [FVM](https://fvm.app)) |
+| Flutter SDK | `3.41.9` |
 | Dart SDK | `>=3.10.0 <4.0.0` |
 | Java (Android) | `17` |
-| Ruby (Fastlane) | `3.4` |
+| Ruby (Fastlane) | `3.4.7` |
 
 ### Installation
 
