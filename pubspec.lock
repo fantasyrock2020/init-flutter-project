@@ -582,7 +582,7 @@ packages:
     source: hosted
     version: "4.12.0"
   json_serializable:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: json_serializable
       sha256: ffcd10cde35a93b2abbbcc26bd9971f4ca93763e8abe78d855e3c4177797e501
