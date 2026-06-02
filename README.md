@@ -316,6 +316,12 @@ data/lib/repositories/province_repository_impl.dart          # Repository implem
 
 Includes CRUD operations (`getList`, `getPaging`, `insert`, `update`, `delete`, `getByID`) out of the box.
 
+### 4. Generate Logo
+
+```bash
+dart run flutter_launcher_icons
+```
+
 ---
 
 ## 🔧 Build Runner Commands
