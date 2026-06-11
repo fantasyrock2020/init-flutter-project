@@ -43,11 +43,7 @@ PascalName="$(to_pascal_case "$FEATURE_NAME")$(to_pascal_case "$PAGE_NAME")"
 cat > "$PAGE_PATH/bloc/${PAGE_NAME}_bloc.dart" <<EOL
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
-
-import '../../../../core/bloc/base_bloc.dart';
+import 'package:core/core.dart';
 
 part '${PAGE_NAME}_bloc.freezed.dart';
 part '${PAGE_NAME}_event.dart';
